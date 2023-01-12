@@ -1,0 +1,471 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Stack Viewer</title>
+</head>
+
+
+
+<style>
+  select {
+      display: inline-block;
+      width: 6em;
+      text-align:center;
+  }
+  label {
+      display: inline-block;
+      width: 6em;
+      margin-right: 1e;
+      padding-top: 0;
+      text-align:center;
+  }
+  #container {
+    position: relative;
+    left = 0px;
+    top = 0px;
+    float: top;
+    width: 100%;
+    height: auto;
+    min-width: 360px;
+    max-width: 750px;
+    min-height: 20px;
+    max-height: 1000px;
+    background-color:rgb(255, 255, 255);
+  }
+  #menu_container {
+    float: top;
+    width: 100%;
+    height: auto;
+    min-width: 360px;
+    max-width: 750px;
+    min-height: 20px;
+    max-height: 75px;
+    background-color:rgb(255, 255, 255);
+  }
+  #slider_container {
+    float: top;
+    width: 100%;
+    height: auto;
+    align-content: center;
+    min-width: 360px;
+    max-width: 750px;
+    min-height: 20px;
+    max-height: 75px;
+    background-color:rgb(255, 255, 255);
+  }
+  #slider {
+    -webkit-appearance: none;
+    width: 95%;
+    height: 5px;
+    background: rgb(25, 25, 25);
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+  }
+  #slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 11px;
+    height: 25px;
+    background: #dddddd;
+    outline:  rgb(25, 25, 25);
+    cursor: pointer;
+  }
+  #slider::-moz-range-thumb {
+    width: 11px;
+    height: 25px;
+    background: #dddddd;
+    outline:  rgb(25, 25, 25);
+    cursor: pointer;
+  }
+  #loader {
+    position: absolute;
+    left: 45%;
+    top: 75%;
+    z-index: 1;
+    width: 50px;
+    height: 50px;
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #646464;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+  }
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  .animate-bottom {
+    position: relative;
+    -webkit-animation-name: animatebottom;
+    -webkit-animation-duration: 1s;
+    animation-name: animatebottom;
+    animation-duration: 1s
+  }
+  @-webkit-keyframes animatebottom {
+    from { bottom:-100px; opacity:0 } 
+    to { bottom:0px; opacity:1 }
+  }
+  @keyframes animatebottom { 
+    from{ bottom:-100px; opacity:0 } 
+    to{ bottom:0; opacity:1 }
+  }
+  #viewer_container {
+    float: top;
+    width: 100%;
+    height: auto;
+    min-width: 360px;
+    max-width: 750px;
+    min-height: 360px;
+    max-height: 750px;
+    background-color:rgb(255, 255, 255);
+  }
+  #image {
+    position: absolute;
+    top: 100px;
+    left: 0px;
+    width: 100%;
+    height: auto;
+    min-width: 360px;
+    max-width: 750px;
+    min-height: 360px;
+    max-height: 750px;
+    opacity: 100%;
+  }
+  #overlay {
+    position: absolute;
+    top: 100px;
+    left: 0px;
+    width: 100%;
+    height: auto;
+    min-width: 360px;
+    max-width: 750px;
+    min-height: 360px;
+    max-height: 750px;
+    opacity: 100%;
+    filter: hue-rotate(0deg);
+  }
+  #mask {
+    position: absolute;
+    top: 100px;
+    left: 0px;
+    width: 100%;
+    height: auto;
+    min-width: 360px;
+    max-width: 750px;
+    min-height: 360px;
+    max-height: 750px;
+    opacity: 100%;
+    filter: hue-rotate(0deg);
+  }
+</style>
+
+<body>
+<script>
+
+  // Define Constants
+  const zeroPad = (num, places) => String(num).padStart(places, '0')
+  const prefix = "https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/";
+  const suffix = ".png";
+
+  class Stack
+  {
+    constructor(name, type)
+    {
+      this.name = name;
+      this.type = type;
+      this.images = [];
+      this.preloaded = false;
+    }
+  }
+
+  // Specify reference stacks
+  stack_reference = new Stack("DAPI", "lines");
+
+  // Specify line stacks
+  stack_crh = new Stack("CRH", "lines");
+  stack_dlx5a = new Stack("DLX5A", "lines");
+  stack_galn = new Stack("GALN", "lines");
+  stack_oxt = new Stack("OXT", "lines");
+  stack_slc6a4b = new Stack("SLC6A4B", "lines");
+  stack_th1 = new Stack("TH1", "lines");
+  stack_th2 = new Stack("TH2", "lines");
+  stack_vacht = new Stack("VACHT", "lines");
+
+  // Specify mask stacks
+  stack_ch = new Stack("cH", "masks");
+  stack_habenula = new Stack("habenula", "masks");
+  stack_ob = new Stack("OB", "masks");
+  stack_pgi = new Stack("PGI", "masks");
+  stack_pgz = new Stack("PGZ", "masks");
+  stack_poa = new Stack("PoA", "masks");
+  stack_vv = new Stack("Vv", "masks");
+
+  // Set auto callbacks
+  setInterval(update, 250);
+  requestIdleCallback(preload_reference, { timeout: 500 });
+  
+  function preload(stack)
+  {
+    for (var i = 0; i < 399; i++) {
+      var result=prefix + stack.type + "/" + stack.name + "/" + stack.name + zeroPad(i,4) + suffix;
+        stack.images[i] = new Image();
+        stack.images[i].src = result;
+    }
+  }
+
+  function preload_reference() 
+  {
+    preload(stack_reference);
+  }
+
+  function check_preload(stack)
+  {
+    if (typeof stack.images[398] != "undefined") {
+      if((stack.images[398].naturalHeight == 0) && (!stack.images[398].complete))
+      {
+        stack.preloaded = false;
+      }
+      else
+      {
+        stack.preloaded = true;
+      }
+    }
+    else
+    {
+      stack.preloaded = false;
+    }
+  }
+
+  function update()
+  {
+    // Get UI values
+    var slider_index = document.getElementById("slider").value;
+    var reference_option = document.getElementById("reference_menu").value
+    var line_option = document.getElementById("line_menu").value
+    var mask_option = document.getElementById("mask_menu").value
+
+    // Select and Display Reference
+    if(reference_option == "DAPI")
+    {
+      // Check stack preloading status
+      check_preload(stack_reference);
+
+      if (stack_reference.preloaded)
+      {
+        document.getElementById("overlay").style.display = 'block';
+        document.getElementById("mask").style.display = 'block';
+        document.getElementById("loader").style.display = 'none';
+        var result=prefix + "lines/DAPI/DAPI" + zeroPad(slider_index,4) + suffix;
+        document.getElementById("image").src = result;
+      }
+      else
+      {
+        document.getElementById("overlay").style.display = 'none';
+        document.getElementById("mask").style.display = 'none';
+        document.getElementById("loader").style.display = 'block';
+      }
+    }
+    else
+    {
+      var result=prefix + "lines/blank" + suffix;
+      document.getElementById("image").src = result;
+    }
+
+    // Select Line
+    var display_line = false;
+    if (line_option == "CRH")
+    {
+      stack_line = stack_crh;
+      display_line = true;
+    }
+    if (line_option == "DLX5A")
+    {
+      stack_line = stack_dlx5a;
+      display_line = true;
+    }
+    if (line_option == "GALN")
+    {
+      stack_line = stack_galn;
+      display_line = true;
+    }
+    if (line_option == "OXT")
+    {
+      stack_line = stack_oxt;
+      display_line = true;
+    }
+    if (line_option == "SLC6A4B")
+    {
+      stack_line = stack_slc6a4b;
+      display_line = true;
+    }
+    if (line_option == "TH1")
+    {
+      stack_line = stack_th1;
+      display_line = true;
+    }
+    if (line_option == "TH2")
+    {
+      stack_line = stack_th2;
+      display_line = true;
+    }
+    if (line_option == "VACHT")
+    {
+      stack_line = stack_vacht
+      display_line = true;
+    }
+
+    // Display line
+    if(display_line)
+    {
+      // Check stack preloading status
+      check_preload(stack_line);
+
+      if (stack_line.preloaded)
+      {
+        document.getElementById("overlay").style.display = 'block';
+        document.getElementById("mask").style.display = 'block';
+        document.getElementById("loader").style.display = 'none';
+        var result=prefix + 'lines/' + stack_line.name + "/" + stack_line.name + zeroPad(slider_index,4) + suffix;
+        document.getElementById("overlay").src = result;
+      }
+      else
+      {
+        document.getElementById("overlay").style.display = 'none';
+        document.getElementById("mask").style.display = 'none';
+        document.getElementById("loader").style.display = 'block';
+        preload(stack_line);
+      }
+    }
+    else
+    {
+      var result=prefix + "lines/blank" + suffix;
+      document.getElementById("overlay").src = result;
+    }
+
+    // Select Mask
+    var display_mask = false;
+    if (mask_option == "cH")
+    {
+      stack_mask = stack_ch;
+      display_mask = true;
+    }
+    if (mask_option == "habenula")
+    {
+      stack_mask = stack_habenula;
+      display_mask = true;
+    }
+    if (mask_option == "OB")
+    {
+      stack_mask = stack_ob;
+      display_mask = true;
+    }
+    if (mask_option == "PGI")
+    {
+      stack_mask = stack_pgi;
+      display_mask = true;
+    }
+    if (mask_option == "PGZ")
+    {
+      stack_mask = stack_pgz;
+      display_mask = true;
+    }
+    if (mask_option == "PoA")
+    {
+      stack_mask = stack_poa;
+      display_mask = true;
+    }
+    if (mask_option == "Vv")
+    {
+      stack_mask = stack_vv;
+      display_mask = true;
+    }
+
+    // Display mask
+    if(display_mask)
+    {
+      // Check stack preloading status
+      check_preload(stack_mask);
+
+      if (stack_mask.preloaded)
+      {
+        document.getElementById("overlay").style.display = 'block';
+        document.getElementById("mask").style.display = 'block';
+        document.getElementById("loader").style.display = 'none';
+        var result=prefix + 'masks/' + stack_mask.name + "/" + stack_mask.name + zeroPad(slider_index,4) + suffix;
+        document.getElementById("mask").src = result;
+      }
+      else
+      {
+        document.getElementById("overlay").style.display = 'none';
+        document.getElementById("mask").style.display = 'none';
+        document.getElementById("loader").style.display = 'block';
+        preload(stack_mask);
+      }
+    }
+    else
+    {
+      var result=prefix + "lines/blank" + suffix;
+      document.getElementById("mask").src = result;
+    }
+  }
+</script>
+
+<div id="container">
+  <div id="menu_container">
+    <center>
+    <label for="reference_menu">Reference<select name="reference_menu" id="reference_menu" oninput="update()">
+      <option value="DAPI" selected>DAPI</option>
+      <option value="none">-</option>
+    </select></label>
+    <label for="line_menu">Line<select name="line_menu" id="line_menu" oninput="update()">
+      <option value="none" selected>-</option>
+      <option value="CRH">CRH</option>
+      <option value="DLX5A">DLX5A</option>
+      <option value="GALN">GALN</option>
+      <option value="OXT">OXT</option>
+      <option value="SLC6A4B">SLC6A4B</option>
+      <option value="TH1">TH1</option>
+      <option value="TH2">TH2</option>
+      <option value="VACHT">VACHT</option>
+    </select></label>
+    <label for="mask_menu">Mask<select name="mask_menu" id="mask_menu" oninput="update()">
+      <option value="none" selected>-</option>
+      <option value="cH">cH</option>
+      <option value="habenula">habenula</option>
+      <option value="OB">OB</option>
+      <option value="PGI">PGI</option>
+      <option value="PGZ">PGZ</option>
+      <option value="PoA">PoA</option>
+      <option value="Vv">Vv</option>
+    </select></label>
+    </center>
+  </div>
+
+  <div id="slider_container">
+    <center>
+    <input type="range" min="0" max="398" value="100" id="slider" oninput="update()">
+    </center>
+  </div>
+
+  <div id="loader"></div>
+
+  <div id="viewer_container">
+    <img src="https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/lines/blank.png" id="image">
+    <img src="https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/lines/blank.png" id="overlay">
+    <img src="https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/lines/blank.png" id="mask">
+  </div>
+</div> 
+</body>
+
+
+
+</html>
+
+
