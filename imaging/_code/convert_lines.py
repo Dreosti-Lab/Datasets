@@ -19,9 +19,9 @@ from PIL import Image
 #baseline = 0.25
 #scale = 15.00
 
-#line_name = 'OXT'
-#baseline = 0.02
-#scale = 44.91
+line_name = 'OXT'
+baseline = 0.02
+scale = 44.91
 
 #line_name = 'SLC6A4B'
 #baseline = 1.00
@@ -35,15 +35,15 @@ from PIL import Image
 #baseline = 0.77
 #scale = 3.30
 
-line_name = 'VACHT'
-baseline = -0.45
-scale = 39.75
+#line_name = 'VACHT'
+#baseline = -0.45
+#scale = 39.75
 
 # Build paths
-base_folder = '/home/kampff/Dropbox/Adam_Ele/Website_Stacks/'
-stack_path = base_folder + 'unprocessed/lines/' + line_name + '.tif'
-mask_path = base_folder + 'unprocessed/masks/' + 'DAPI' + '_MASK.tif'
-output_folder = base_folder + 'lines/' + line_name
+base_folder = 'S:/WIBR_Dreosti_Lab/Alizee/LSZ1/Registration/Analysis/Website_Stacks'
+stack_path = base_folder + '/'+ line_name + '/Mean_OXT_n3.tif'
+mask_path = base_folder + '/masks/' + 'DAPI' + '_MASK.tif'
+output_folder = base_folder + '/processed/' + line_name
 
 # Create output folder (if it does not exist)
 if not os.path.exists(output_folder):
