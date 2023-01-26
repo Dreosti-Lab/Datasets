@@ -20,8 +20,8 @@ from PIL import Image
 #scale = 15.00
 
 # line_name = 'OXT'
-# baselines = [0.02,-0.09]
-# scales = [44.91,8.19]
+# baselines = 0.02
+# scales = 44.91
 
 #line_name = 'SLC6A4B'
 #baseline = 1.00
@@ -63,7 +63,7 @@ num_frames = line_data.n_frames
 container = np.zeros((width,height,4), dtype=np.uint8)
 # Convert raw TIFF to PNG with alpha layers
 for i in range(num_frames):
-    
+    temp=[]
     for ch in range(len(baselines)):
 
         # Load line stack
@@ -78,17 +78,17 @@ for i in range(num_frames):
         data = np.asarray(line_data) * np.asarray(mask_data)
         rescaled = np.clip(((data - baseline) / scale) * 255.0, 0, 255)
         integer = rescaled.astype(np.uint8)
+        
+        temp.append(integer)
         if ch==0:    
             container[:,:,0] = integer
-            # temp = integer
         elif ch==1:
             container[:,:,2] = integer
-            # temp = (temp + integer)/2
-            container[:,:,3] = integer
-            #container[:,:,3] = temp
             
+    temp_av=np.mean(temp,axis=0) 
+    container[:,:,3] = temp_av       
     output = Image.fromarray(container)
     
-    path = output_folder + '/nonAvAlpha/processed_' + str(i).zfill(4) + '.png'
+    path = output_folder + '/OXT_DLX_av/processed_' + str(i).zfill(4) + '.png'
     output.save(path)
 #FIN

@@ -197,12 +197,14 @@
   stack_th1 = new Stack("TH1", "lines");
   stack_th2 = new Stack("TH2", "lines");
   stack_vacht = new Stack("VACHT", "lines");
+  stack_chat1a = new Stack("CHAT1A", "lines");
+  stack_sst1 = new Stack("SST1", "lines");
 
   // Specify mask stacks
   stack_ch = new Stack("cH", "masks");
   stack_habenula = new Stack("habenula", "masks");
   stack_ob = new Stack("OB", "masks");
-  stack_pgi = new Stack("PGI", "masks");
+  stack_pgl = new Stack("PGl", "masks");
   stack_pgz = new Stack("PGZ", "masks");
   stack_poa = new Stack("PoA", "masks");
   stack_vv = new Stack("Vv", "masks");
@@ -320,6 +322,17 @@
       stack_line = stack_vacht
       display_line = true;
     }
+     if (line_option == "CHAT1A")
+    {
+      stack_line = stack_chat1a
+      display_line = true;
+    }
+    if (line_option == "SST1")
+    {
+      stack_line = stack_sst1
+      display_line = true;
+    }
+
 
     // Display line
     if(display_line)
@@ -366,9 +379,9 @@
       stack_mask = stack_ob;
       display_mask = true;
     }
-    if (mask_option == "PGI")
+    if (mask_option == "PGl")
     {
-      stack_mask = stack_pgi;
+      stack_mask = stack_pgl;
       display_mask = true;
     }
     if (mask_option == "PGZ")

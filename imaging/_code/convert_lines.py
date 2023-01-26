@@ -3,41 +3,49 @@ import numpy as np
 from PIL import Image
 
 # Specify line and scale values
-#line_name = 'CRH'
-#baseline = -0.42
-#scale = 14.32
+# line_name = 'CRH'
+# baseline = -0.42
+# scale = 14.32
 
 #line_name = 'DAPI'
 #baseline = 0.0
 #scale = 9553.0
 
-#line_name = 'DLX5A'
-#baseline = -0.09
-#scale = 8.19
+# line_name = 'DLX5A'
+# baseline = -0.05
+# scale = 10.89
 
-#line_name = 'GALN'
-#baseline = 0.25
-#scale = 15.00
+# line_name = 'GALN'
+# baseline = 0.25
+# scale = 15.00
 
 line_name = 'OXT'
-baseline = 0.02
-scale = 44.91
+baseline = 0.06
+scale = 43.41
 
-#line_name = 'SLC6A4B'
-#baseline = 1.00
-#scale = 10.05
+# line_name = 'SLC6A4B'
+# baseline = -0.03
+# scale = 8.17
 
-#line_name = 'TH1'
-#baseline = 1.02
-#scale = 25.09
+# line_name = 'TH1'
+# baseline = 1.24
+# scale = 15.32
 
-#line_name = 'TH2'
-#baseline = 0.77
-#scale = 3.30
+# line_name = 'TH2'
+# baseline = 1.11
+# scale = 3.5
 
-#line_name = 'VACHT'
-#baseline = -0.45
-#scale = 39.75
+# line_name = 'VACHT'
+# baseline = -0.59
+# scale = 40.26
+
+# line_name = 'CHAT1A'
+# baseline = -0.56
+# scale = 15.43
+
+# line_name = 'SST1'
+# baseline = -0.43
+# scale = 49.23
 
 # Build paths
 base_folder = 'S:/WIBR_Dreosti_Lab/Alizee/LSZ1/Registration/Analysis/Website_Stacks'

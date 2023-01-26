@@ -3,18 +3,18 @@ import numpy as np
 from PIL import Image, ImageFilter
 
 # Specify mask
-#mask_name = 'cH'
-#mask_name = 'habenula'
-#mask_name = 'OB'
-#mask_name = 'PGI'
-#mask_name = 'PGZ'
-#mask_name = 'PoA'
+# mask_name = 'cH'
+# mask_name = 'habenula'
+# mask_name = 'OB'
+# mask_name = 'PGl'
+# mask_name = 'PGZ'
+# mask_name = 'PoA'
 mask_name = 'Vv'
 
 # Build paths
-base_folder = '/home/kampff/Dropbox/Adam_Ele/Website_Stacks/'
-stack_path = base_folder + 'unprocessed/masks/' + mask_name + '_MASK.tif'
-output_folder = base_folder + 'masks/' + mask_name
+base_folder =  'S:/WIBR_Dreosti_Lab/Alizee/LSZ1/Registration/Analysis/Website_Stacks/'
+stack_path = base_folder + 'masks/' + mask_name + '_MASK.tif'
+output_folder = base_folder + '/processed/masks/' + mask_name
 
 # Create output folder (if it does not exist)
 if not os.path.exists(output_folder):
