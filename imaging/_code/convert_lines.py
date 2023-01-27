@@ -7,9 +7,9 @@ from PIL import Image
 # baseline = -0.42
 # scale = 14.32
 
-#line_name = 'DAPI'
-#baseline = 0.0
-#scale = 9553.0
+line_name = 'DAPI'
+baseline = 0.0
+scale = 9553.0
 
 # line_name = 'DLX5A'
 # baseline = -0.05
@@ -19,9 +19,9 @@ from PIL import Image
 # baseline = 0.25
 # scale = 15.00
 
-line_name = 'OXT'
-baseline = 0.06
-scale = 43.41
+# line_name = 'OXT'
+# baseline = 0.06
+# scale = 43.41
 
 # line_name = 'SLC6A4B'
 # baseline = -0.03
@@ -49,7 +49,7 @@ scale = 43.41
 
 # Build paths
 base_folder = 'S:/WIBR_Dreosti_Lab/Alizee/LSZ1/Registration/Analysis/Website_Stacks'
-stack_path = base_folder + '/'+ line_name + '/Mean_OXT_n3.tif'
+stack_path = base_folder + '/'+ line_name + '/DAPI_1000.tif'
 mask_path = base_folder + '/masks/' + 'DAPI' + '_MASK.tif'
 output_folder = base_folder + '/processed/' + line_name
 
