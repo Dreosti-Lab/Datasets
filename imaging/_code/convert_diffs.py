@@ -4,16 +4,16 @@ from PIL import Image
 import matplotlib.pyplot as plt
 
 # Specify diff name, basediff, and scale values
-diff_name = 'DIFF_Noxious'
+diff_name = 'Diff_Stack_Nox'
 baseline = 0.06
 scale = 1.25
 
 # Build paths
-base_folder = '/home/kampff/data/Dropbox/Adam_Ele/Website_Stacks'
-stack_path = base_folder + '/unprocessed/diffs/'+ diff_name + '.tif'
-mask_path = base_folder + '/unprocessed/masks/DAPI_MASK.tif'
-pos_output_folder = base_folder + '/processed/' + diff_name + '_pos'
-neg_output_folder = base_folder + '/processed/' + diff_name + '_neg'
+base_folder = 'S:/WIBR_Dreosti_Lab/Alizee/LSZ1/Registration'
+stack_path = base_folder + '/Analysis/NOXIOUS/'+ diff_name + '.tif'
+mask_path = base_folder + '/mask/DAPI_MASK_NOX.tif'
+pos_output_folder = base_folder + '/Analysis/NOXIOUS/processed/' + diff_name + '_pos'
+neg_output_folder = base_folder + '/Analysis/NOXIOUS/processed/' + diff_name + '_neg'
 
 # Create output folders (if they do not exist)
 if not os.path.exists(pos_output_folder):
