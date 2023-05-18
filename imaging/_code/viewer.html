@@ -190,24 +190,25 @@
 
   // Specify line stacks
   stack_crh = new Stack("CRH", "lines");
-  stack_dlx5a = new Stack("DLX5A", "lines");
+  stack_dat = new Stack("DAT", "lines");
   stack_galn = new Stack("GALN", "lines");
   stack_oxt = new Stack("OXT", "lines");
   stack_slc6a4b = new Stack("SLC6A4B", "lines");
+  stack_slc6a4a = new Stack("SLC6A4A", "lines");
   stack_th1 = new Stack("TH1", "lines");
-  stack_th2 = new Stack("TH2", "lines");
   stack_vacht = new Stack("VACHT", "lines");
   stack_chat1a = new Stack("CHAT1A", "lines");
   stack_sst1 = new Stack("SST1", "lines");
 
   // Specify mask stacks
   stack_ch = new Stack("cH", "masks");
-  stack_habenula = new Stack("habenula", "masks");
+  stack_habenula = new Stack("Habenula", "masks");
   stack_ob = new Stack("OB", "masks");
-  stack_pgl = new Stack("PGl", "masks");
+  stack_dl = new Stack("DL", "masks");
   stack_pgz = new Stack("PGZ", "masks");
   stack_poa = new Stack("PoA", "masks");
-  stack_vv = new Stack("Vv", "masks");
+  stack_pt = new Stack("PT", "masks");
+  stack_vhb = new Stack("vHb", "masks");
 
   // Set auto callbacks
   setInterval(update, 250);
@@ -215,7 +216,7 @@
   
   function preload(stack)
   {
-    for (var i = 0; i < 399; i++) {
+    for (var i = 0; i < 319; i++) {
       var result=prefix + stack.type + "/" + stack.name + "/" + stack.name + zeroPad(i,4) + suffix;
         stack.images[i] = new Image();
         stack.images[i].src = result;
@@ -229,8 +230,8 @@
 
   function check_preload(stack)
   {
-    if (typeof stack.images[398] != "undefined") {
-      if((stack.images[398].naturalHeight == 0) && (!stack.images[398].complete))
+    if (typeof stack.images[318] != "undefined") {
+      if((stack.images[318].naturalHeight == 0) && (!stack.images[318].complete))
       {
         stack.preloaded = false;
       }
@@ -287,9 +288,9 @@
       stack_line = stack_crh;
       display_line = true;
     }
-    if (line_option == "DLX5A")
+    if (line_option == "DAT")
     {
-      stack_line = stack_dlx5a;
+      stack_line = stack_dat;
       display_line = true;
     }
     if (line_option == "GALN")
@@ -307,14 +308,14 @@
       stack_line = stack_slc6a4b;
       display_line = true;
     }
+    if (line_option == "SLC6A4A")
+    {
+      stack_line = stack_slc6a4a;
+      display_line = true;
+    }
     if (line_option == "TH1")
     {
       stack_line = stack_th1;
-      display_line = true;
-    }
-    if (line_option == "TH2")
-    {
-      stack_line = stack_th2;
       display_line = true;
     }
     if (line_option == "VACHT")
@@ -369,7 +370,7 @@
       stack_mask = stack_ch;
       display_mask = true;
     }
-    if (mask_option == "habenula")
+    if (mask_option == "Habenula")
     {
       stack_mask = stack_habenula;
       display_mask = true;
@@ -379,9 +380,9 @@
       stack_mask = stack_ob;
       display_mask = true;
     }
-    if (mask_option == "PGl")
+    if (mask_option == "DL")
     {
-      stack_mask = stack_pgl;
+      stack_mask = stack_dl;
       display_mask = true;
     }
     if (mask_option == "PGZ")
@@ -394,9 +395,14 @@
       stack_mask = stack_poa;
       display_mask = true;
     }
-    if (mask_option == "Vv")
+    if (mask_option == "PT")
     {
-      stack_mask = stack_vv;
+      stack_mask = stack_pt;
+      display_mask = true;
+    }
+    if (mask_option == "vHb")
+    {
+      stack_mask = stack_vhb;
       display_mask = true;
     }
 
@@ -440,12 +446,12 @@
     <label for="line_menu">Line<select name="line_menu" id="line_menu" oninput="update()">
       <option value="none" selected>-</option>
       <option value="CRH">CRH</option>
-      <option value="DLX5A">DLX5A</option>
+      <option value="DAT">DAT</option>
       <option value="GALN">GALN</option>
       <option value="OXT">OXT</option>
       <option value="SLC6A4B">SLC6A4B</option>
+      <option value="SLC6A4A">SLCC6A4A</option>
       <option value="TH1">TH1</option>
-      <option value="TH2">TH2</option>
       <option value="VACHT">VACHT</option>
       <option value="CHAT1A">CHAT1A</option>
       <option value="SST1">SST1</option>
@@ -453,19 +459,20 @@
     <label for="mask_menu">Mask<select name="mask_menu" id="mask_menu" oninput="update()">
       <option value="none" selected>-</option>
       <option value="cH">cH</option>
-      <option value="habenula">habenula</option>
+      <option value="Habenula">Habenula</option>
       <option value="OB">OB</option>
-      <option value="PGI">PGI</option>
+      <option value="DL">DL</option>
       <option value="PGZ">PGZ</option>
       <option value="PoA">PoA</option>
-      <option value="Vv">Vv</option>
+      <option value="PT">PT</option>
+      <option value="vHb">vHb</option>
     </select></label>
     </center>
   </div>
 
   <div id="slider_container">
     <center>
-    <input type="range" min="0" max="398" value="100" id="slider" oninput="update()">
+    <input type="range" min="0" max="318" value="100" id="slider" oninput="update()">
     </center>
   </div>
 
