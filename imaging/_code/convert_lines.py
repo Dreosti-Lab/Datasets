@@ -9,7 +9,11 @@ from PIL import Image
 
 line_name = 'DAPI'
 baseline = 0.0
-scale = 9553.0
+scale = 12000
+
+# line_name = 'TH1'
+# baseline = 1
+# scale = 18
 
 # line_name = 'DLX5A'
 # baseline = -0.05
@@ -48,8 +52,8 @@ scale = 9553.0
 # scale = 49.23
 
 # Build paths
-base_folder = 'S:/WIBR_Dreosti_Lab/Alizee/LSZ1/Registration/Analysis/Website_Stacks'
-stack_path = base_folder + '/'+ line_name + '/DAPI_1000.tif'
+base_folder = 'S:/WIBR_Dreosti_Lab/Alizee/LSZ1/Registration/Analysis/Website_Stacks/512'
+stack_path = base_folder + '/'+ line_name + '/DAPI.tif'
 mask_path = base_folder + '/masks/' + 'DAPI' + '_MASK.tif'
 output_folder = base_folder + '/processed/' + line_name
 
