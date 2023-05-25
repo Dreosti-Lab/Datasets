@@ -189,25 +189,40 @@
   stack_reference = new Stack("DAPI", "lines");
 
   // Specify line stacks
+  stack_chat1a = new Stack("CHAT1A", "lines");
   stack_crh = new Stack("CRH", "lines");
   stack_dat = new Stack("DAT", "lines");
   stack_galn = new Stack("GALN", "lines");
+  stack_hdc = new Stack("HDC", "lines");
+  stack_npy = new Stack("NPY", "lines");
+  stack_otpa = new Stack("OTPA", "lines");
+  stack_otpb = new Stack("OTPB", "lines");
   stack_oxt = new Stack("OXT", "lines");
-  stack_slc6a4b = new Stack("SLC6A4B", "lines");
   stack_slc6a4a = new Stack("SLC6A4A", "lines");
+  stack_slc6a4b = new Stack("SLC6A4B", "lines");
+  stack_sst1 = new Stack("SST1", "lines");
   stack_th1 = new Stack("TH1", "lines");
   stack_vacht = new Stack("VACHT", "lines");
-  stack_chat1a = new Stack("CHAT1A", "lines");
-  stack_sst1 = new Stack("SST1", "lines");
 
   // Specify mask stacks
-  stack_ch = new Stack("cH", "masks");
-  stack_habenula = new Stack("Habenula", "masks");
-  stack_ob = new Stack("OB", "masks");
   stack_dl = new Stack("DL", "masks");
+  stack_hb = new Stack("Hb", "masks");
+  stack_hc = new Stack("Hc", "masks");
+  stack_hd = new Stack("Hd", "masks");
+  stack_LC = new Stack("LC", "masks");
+  stack_NLV = new Stack("NLV", "masks");
+  stack_NMLF = new Stack("NMLF", "masks");
+  stack_ob = new Stack("OB", "masks");
+  stack_ot = new Stack("OT", "masks");
+  stack_p = new Stack("P", "masks");
   stack_pgz = new Stack("PGZ", "masks");
   stack_poa = new Stack("PoA", "masks");
+  stack_ppd = new Stack("PPd", "masks");
+  stack_ppv = new Stack("PPv", "masks");
+  stack_prt = new Stack("PrT", "masks");
   stack_pt = new Stack("PT", "masks");
+  stack_sbp = new Stack("sbP", "masks");
+  stack_sr = new Stack("SR", "masks");
   stack_vhb = new Stack("vHb", "masks");
 
   // Set auto callbacks
@@ -283,6 +298,11 @@
 
     // Select Line
     var display_line = false;
+    if (line_option == "CHAT1A")
+    {
+      stack_line = stack_chat1a;
+      display_line = true;
+    }
     if (line_option == "CRH")
     {
       stack_line = stack_crh;
@@ -298,39 +318,54 @@
       stack_line = stack_galn;
       display_line = true;
     }
-    if (line_option == "OXT")
+    if (line_option == "HDC")
     {
-      stack_line = stack_oxt;
+      stack_line = stack_hdc;
       display_line = true;
     }
-    if (line_option == "SLC6A4B")
+    if (line_option == "NPY")
     {
-      stack_line = stack_slc6a4b;
+      stack_line = stack_npy;
+      display_line = true;
+    }
+    if (line_option == "OTPA")
+    {
+      stack_line = stack_otpa;
+      display_line = true;
+    }
+    if (line_option == "OTPB")
+    {
+      stack_line = stack_otpb
+      display_line = true;
+    }
+     if (line_option == "OXT")
+    {
+      stack_line = stack_oxt
       display_line = true;
     }
     if (line_option == "SLC6A4A")
     {
-      stack_line = stack_slc6a4a;
+      stack_line = stack_slc6a4a
       display_line = true;
     }
-    if (line_option == "TH1")
+     if (line_option == "SLC6A4B")
     {
-      stack_line = stack_th1;
+      stack_line = stack_slc6a4b
       display_line = true;
     }
-    if (line_option == "VACHT")
-    {
-      stack_line = stack_vacht
-      display_line = true;
-    }
-     if (line_option == "CHAT1A")
-    {
-      stack_line = stack_chat1a
-      display_line = true;
-    }
-    if (line_option == "SST1")
+     if (line_option == "SST1")
     {
       stack_line = stack_sst1
+      display_line = true;
+    }
+     if (line_option == "TH1")
+    {
+      stack_line = stack_th1
+      display_line = true;
+    }
+     if (line_option == "VACHT")
+    {
+      stack_line = stack_vacht
       display_line = true;
     }
 
@@ -365,14 +400,39 @@
 
     // Select Mask
     var display_mask = false;
-    if (mask_option == "cH")
+    if (mask_option == "DL")
     {
-      stack_mask = stack_ch;
+      stack_mask = stack_dl;
       display_mask = true;
     }
-    if (mask_option == "Habenula")
+    if (mask_option == "Hb")
     {
-      stack_mask = stack_habenula;
+      stack_mask = stack_hb;
+      display_mask = true;
+    }
+    if (mask_option == "Hc")
+    {
+      stack_mask = stack_hc;
+      display_mask = true;
+    }
+    if (mask_option == "Hd")
+    {
+      stack_mask = stack_hd;
+      display_mask = true;
+    }
+    if (mask_option == "LC")
+    {
+      stack_mask = stack_lc;
+      display_mask = true;
+    }
+    if (mask_option == "NLV")
+    {
+      stack_mask = stack_nlv;
+      display_mask = true;
+    }
+    if (mask_option == "NMLF")
+    {
+      stack_mask = stack_nmlf;
       display_mask = true;
     }
     if (mask_option == "OB")
@@ -380,9 +440,14 @@
       stack_mask = stack_ob;
       display_mask = true;
     }
-    if (mask_option == "DL")
+    if (mask_option == "OT")
     {
-      stack_mask = stack_dl;
+      stack_mask = stack_ot;
+      display_mask = true;
+    }
+    if (mask_option == "P")
+    {
+      stack_mask = stack_p;
       display_mask = true;
     }
     if (mask_option == "PGZ")
@@ -395,9 +460,34 @@
       stack_mask = stack_poa;
       display_mask = true;
     }
+    if (mask_option == "PPd")
+    {
+      stack_mask = stack_ppd;
+      display_mask = true;
+    }
+    if (mask_option == "PPv")
+    {
+      stack_mask = stack_ppv;
+      display_mask = true;
+    }
+    if (mask_option == "PrT")
+    {
+      stack_mask = stack_prt;
+      display_mask = true;
+    }
     if (mask_option == "PT")
     {
       stack_mask = stack_pt;
+      display_mask = true;
+    }
+    if (mask_option == "sP")
+    {
+      stack_mask = stack_sbp;
+      display_mask = true;
+    }
+    if (mask_option == "SR")
+    {
+      stack_mask = stack_sr;
       display_mask = true;
     }
     if (mask_option == "vHb")
@@ -445,26 +535,41 @@
     </select></label>
     <label for="line_menu">Line<select name="line_menu" id="line_menu" oninput="update()">
       <option value="none" selected>-</option>
+      <option value="CHAT1A">CHAT1A</option>
       <option value="CRH">CRH</option>
       <option value="DAT">DAT</option>
       <option value="GALN">GALN</option>
+      <option value="HDC">HDC</option>
+      <option value="NPY">NPY</option>
+      <option value="OTPA">OTPA</option>
+      <option value="OTPB">OTPB</option>
       <option value="OXT">OXT</option>
+      <option value="SLC6A4A">SLC6A4A</option>
       <option value="SLC6A4B">SLC6A4B</option>
-      <option value="SLC6A4A">SLCC6A4A</option>
+      <option value="SST1">SST1</option>
       <option value="TH1">TH1</option>
       <option value="VACHT">VACHT</option>
-      <option value="CHAT1A">CHAT1A</option>
-      <option value="SST1">SST1</option>
     </select></label>
     <label for="mask_menu">Mask<select name="mask_menu" id="mask_menu" oninput="update()">
       <option value="none" selected>-</option>
-      <option value="cH">cH</option>
-      <option value="Habenula">Habenula</option>
-      <option value="OB">OB</option>
       <option value="DL">DL</option>
+      <option value="Hb">Hb</option>
+      <option value="Hc">Hc</option>
+      <option value="Hd">Hd</option>
+      <option value="LC">LC</option>
+      <option value="NLV">NLV</option>
+      <option value="NMLF">NMLF</option>
+      <option value="OB">OB</option>
+      <option value="OT">OT</option>
+      <option value="P">P</option>
       <option value="PGZ">PGZ</option>
       <option value="PoA">PoA</option>
+      <option value="PPd">PPd</option>
+      <option value="PPv">PPv</option>
+      <option value="PrT">PrT</option>
       <option value="PT">PT</option>
+      <option value="sbP">sbP</option>
+      <option value="SR">SR</option>
       <option value="vHb">vHb</option>
     </select></label>
     </center>
