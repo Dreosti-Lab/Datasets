@@ -3,14 +3,14 @@ import numpy as np
 from PIL import Image, ImageFilter
 
 # Specify mask
-#mask_name = 'cH'
+mask_name = 'vENT'
 #mask_name = 'Habenula'
 #mask_name = 'OB'
 #mask_name = 'DL'
 #mask_name = 'PGZ'
 #mask_name = 'PoA'
 #mask_name = 'PT'
-mask_name = 'vHb'
+#mask_name = 'vHb'
 
 # Build paths
 base_folder =  'S:/WIBR_Dreosti_Lab/Alizee/LSZ1/Registration/Analysis/Website_Stacks/512/'

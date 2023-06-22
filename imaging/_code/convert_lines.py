@@ -11,21 +11,21 @@ from PIL import Image
 # baseline = 0.0
 # scale = 12000
 
-line_name = 'POMCA'
-baseline = -8
-scale = 3
+# line_name = 'POMCA'
+# baseline = -8
+# scale = 3
 
 # line_name = 'DLX5A'
-# baseline = -0.05
-# scale = 10.89
+# baseline = 1
+# scale = 13
 
-# line_name = 'GALN'
-# baseline = 0.25
-# scale = 15.00
+# line_name = 'CB1'
+# baseline = 0.8
+# scale = 2
 
-# line_name = 'OXT'
-# baseline = 0.06
-# scale = 43.41
+line_name = 'NTS'
+baseline = 1
+scale = 3
 
 # line_name = 'SLC6A4B'
 # baseline = -0.03
@@ -53,7 +53,7 @@ scale = 3
 
 # Build paths
 base_folder = 'S:/WIBR_Dreosti_Lab/Alizee/LSZ1/Registration/Analysis/Website_Stacks/512'
-stack_path = base_folder + '/'+ line_name + '/POMCA.tif'
+stack_path = base_folder + '/'+ line_name + '/NTS.tif'
 mask_path = base_folder + '/masks/' + 'DAPI' + '.tif'
 output_folder = base_folder + '/processed/' + line_name
 
