@@ -194,6 +194,7 @@
   stack_CHAT1A = new Stack("CHAT1A", "lines");
   stack_CRH = new Stack("CRH", "lines");
   stack_DAT = new Stack("DAT", "lines");
+  stack_DLX5A = new Stack("DLX5A", "lines");
   stack_GALN = new Stack("GALN", "lines");
   stack_HDC = new Stack("HDC", "lines");
   stack_KISS1 = new Stack("KISS1", "lines");
@@ -330,6 +331,11 @@
     if (line_option == "DAT")
     {
       stack_line = stack_DAT;
+      display_line = true;
+    }
+     if (line_option == "DLX5A")
+    {
+      stack_line = stack_DLX5A;
       display_line = true;
     }
     if (line_option == "GALN")
@@ -594,6 +600,7 @@
       <option value="CHAT1A">CHAT1A</option>
       <option value="CRH">CRH</option>
       <option value="DAT">DAT</option>
+      <option value="DLX5A">DLX5A</option>
       <option value="GALN">GALN</option>
       <option value="HDC">HDC</option>
       <option value="KISS1">KISS1</option>
