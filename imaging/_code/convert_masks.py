@@ -3,7 +3,7 @@ import numpy as np
 from PIL import Image, ImageFilter
 
 # Specify mask
-mask_name = 'vENT'
+mask_name = 'DAPI'
 #mask_name = 'Habenula'
 #mask_name = 'OB'
 #mask_name = 'DL'
@@ -13,9 +13,9 @@ mask_name = 'vENT'
 #mask_name = 'vHb'
 
 # Build paths
-base_folder =  'S:/WIBR_Dreosti_Lab/Alizee/LSZ1/Registration/Analysis/Website_Stacks/512/'
-stack_path = base_folder + 'masks/' + mask_name + '.tif'
-output_folder = base_folder + '/processed/masks/' + mask_name
+base_folder =  '/Users/alizeekastler/Documents/GitHub/Datasets/imaging'
+stack_path = base_folder + '/masks/' + mask_name + '.tif'
+output_folder = base_folder + '/masks/coronal/' + mask_name
 
 # Create output folder (if it does not exist)
 if not os.path.exists(output_folder):
@@ -27,7 +27,7 @@ height, width = np.shape(mask_data)
 num_frames = mask_data.n_frames
 
 # Convert raw TIFF to PNG with alpha layers
-container = np.zeros((width,height,4), dtype=np.uint8)
+container = np.zeros((height,width,4), dtype=np.uint8)
 for i in range(num_frames):
     mask_data.seek(i)
     gray = mask_data.convert('L')

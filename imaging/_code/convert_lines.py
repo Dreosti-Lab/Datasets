@@ -23,9 +23,9 @@ from PIL import Image
 # baseline = 0.8
 # scale = 2
 
-line_name = 'NTS'
+line_name = 'AVP'
 baseline = 1
-scale = 3
+scale = 15
 
 # line_name = 'SLC6A4B'
 # baseline = -0.03
@@ -52,9 +52,9 @@ scale = 3
 # scale = 49.23
 
 # Build paths
-base_folder = 'S:/WIBR_Dreosti_Lab/Alizee/LSZ1/Registration/Analysis/Website_Stacks/512'
-stack_path = base_folder + '/'+ line_name + '/NTS.tif'
-mask_path = base_folder + '/masks/' + 'DAPI' + '.tif'
+base_folder = '/Volumes/T7/Peptides'
+stack_path = base_folder + '/'+ line_name + '/AVP_s.tif'
+mask_path = base_folder + '/masks/' + 'DAPI_s' + '.tif'
 output_folder = base_folder + '/processed/' + line_name
 
 # Create output folder (if it does not exist)
