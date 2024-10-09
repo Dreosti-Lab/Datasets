@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Stack Viewer</title>
+  <title>Stack Triple Viewer</title>
 </head>
 
 <style>
@@ -152,55 +152,41 @@
     }
   }
 
-  #viewer_container {
-    float: top;
+  #horizontal-viewer_container {
+    position: relative;
     width: 100%;
-    height: auto;
-    min-width: 360px;
+    height: 100%;
     max-width: 750px;
-    min-height: 360px;
-    max-height: 750px;
     background-color: rgb(255, 255, 255);
+    overflow: hidden;
   }
 
-  #image {
-    position: absolute;
-    top: 100px;
-    left: 0px;
+  #sagittal-viewer_container {
+    position: relative;
     width: 100%;
-    height: auto;
-    min-width: 360px;
+    height: 62%;
     max-width: 750px;
-    min-height: 360px;
-    max-height: 750px;
+    background-color: rgb(255, 255, 255);
+    overflow: hidden;
+  }
+
+  #horizontal-viewer_container img,
+  #sagittal-viewer_container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     opacity: 100%;
   }
 
-  #overlay {
-    position: absolute;
-    top: 100px;
-    left: 0px;
-    width: 100%;
-    height: auto;
-    min-width: 360px;
-    max-width: 750px;
-    min-height: 360px;
-    max-height: 750px;
-    opacity: 100%;
+  .image {}
+
+  .overlay {
     filter: hue-rotate(0deg);
   }
 
-  #mask {
-    position: absolute;
-    top: 100px;
-    left: 0px;
-    width: 100%;
-    height: auto;
-    min-width: 360px;
-    max-width: 750px;
-    min-height: 360px;
-    max-height: 750px;
-    opacity: 100%;
+  .mask {
     filter: hue-rotate(0deg);
   }
 </style>
@@ -223,7 +209,7 @@
     }
 
     // Specify reference stacks
-    const stack_reference = new Stack("DAPI", "lines");
+    stack_reference = new Stack("DAPI", "lines");
 
     // Specify line stacks
     const stack_lines = {
@@ -318,28 +304,47 @@
         // Check stack preloading status
         check_preload(stack_reference);
 
+        // Display reference
         if (stack_reference.preloaded) {
+          // Frame
+          var horizontal_result = prefix + "lines/DAPI/DAPI" + zeroPad(slider_index, 4) + suffix;
+          var sagittal_result = prefix + "lines/_sagittal/DAPI/DAPI" + zeroPad(slider_index, 4) + suffix;
+
+          // Loader
           document.getElementById("loader").style.display = 'none';
-          document.getElementById("overlay").style.display = 'block';
-          document.getElementById("mask").style.display = 'block';
-          var result = prefix + "lines/DAPI/DAPI" + zeroPad(slider_index, 4) + suffix;
-          document.getElementById("image").src = result;
+
+          // Horizontal
+          document.getElementById("horizontal-overlay").style.display = 'block';
+          document.getElementById("horizontal-mask").style.display = 'block';
+          document.getElementById("horizontal-image").src = horizontal_result;
+
+          // Sagittal
+          document.getElementById("sagittal-overlay").style.display = 'block';
+          document.getElementById("sagittal-mask").style.display = 'block';
+          document.getElementById("sagittal-image").src = sagittal_result;
         }
         else {
+          // Loader
           document.getElementById("loader").style.display = 'block';
-          document.getElementById("overlay").style.display = 'none';
-          document.getElementById("mask").style.display = 'none';
+
+          // Horizontal
+          document.getElementById("horizontal-overlay").style.display = 'none';
+          document.getElementById("horizontal-mask").style.display = 'none';
+
+          // Sagittal
+          document.getElementById("sagittal-overlay").style.display = 'none';
+          document.getElementById("sagittal-mask").style.display = 'none';
         }
       }
       else {
         var result = prefix + "lines/blank" + suffix;
-        document.getElementById("image").src = result;
+        document.getElementById("horizontal-image").src = result;
+        document.getElementById("sagittal-image").src = result;
       }
 
       // Select Line
       var display_line = false;
-      if(line_option != "none")
-      {
+      if (line_option != "none") {
         stack_line = stack_lines[line_option];
         display_line = true;
       }
@@ -350,28 +355,48 @@
         check_preload(stack_line);
 
         if (stack_line.preloaded) {
+          // Frame
+          var horizontal_result = prefix + 'lines/' + stack_line.name + "/" + stack_line.name + zeroPad(slider_index, 4) + suffix;
+          var sagittal_result = prefix + 'lines/_sagittal/' + stack_line.name + "/" + stack_line.name + zeroPad(slider_index, 4) + suffix;
+
+          // Loader
           document.getElementById("loader").style.display = 'none';
-          document.getElementById("overlay").style.display = 'block';
-          document.getElementById("mask").style.display = 'block';
-          var result = prefix + 'lines/' + stack_line.name + "/" + stack_line.name + zeroPad(slider_index, 4) + suffix;
-          document.getElementById("overlay").src = result;
+
+          // Horizontal
+          document.getElementById("horizontal-overlay").style.display = 'block';
+          document.getElementById("horizontal-mask").style.display = 'block';
+          document.getElementById("horizontal-overlay").src = horizontal_result;
+
+          // Sagittal
+          document.getElementById("sagittal-overlay").style.display = 'block';
+          document.getElementById("sagittal-mask").style.display = 'block';
+          document.getElementById("sagittal-overlay").src = sagittal_result;
         }
         else {
+          // Loader
           document.getElementById("loader").style.display = 'block';
-          document.getElementById("overlay").style.display = 'none';
-          document.getElementById("mask").style.display = 'none';
+
+          // Horizontal
+          document.getElementById("horizontal-overlay").style.display = 'none';
+          document.getElementById("horizontal-mask").style.display = 'none';
+
+          // Sagittal
+          document.getElementById("sagittal-overlay").style.display = 'none';
+          document.getElementById("sagittal-mask").style.display = 'none';
+
+          // Preload Line
           preload(stack_line);
         }
       }
       else {
         var result = prefix + "lines/blank" + suffix;
-        document.getElementById("overlay").src = result;
+        document.getElementById("horizontal-overlay").src = result;
+        document.getElementById("sagittal-overlay").src = result;
       }
 
       // Select Mask
       var display_mask = false;
-      if(mask_option != "none")
-      {
+      if (mask_option != "none") {
         stack_mask = stack_masks[mask_option];
         display_mask = true;
       }
@@ -382,22 +407,43 @@
         check_preload(stack_mask);
 
         if (stack_mask.preloaded) {
+          // Frame
+          var horizontal_result = prefix + 'masks/' + stack_mask.name + "/" + stack_mask.name + zeroPad(slider_index, 4) + suffix;
+          var sagittal_result = prefix + 'masks/_sagittal/' + stack_mask.name + "/" + stack_mask.name + zeroPad(slider_index, 4) + suffix;
+
+          // Loader
           document.getElementById("loader").style.display = 'none';
-          document.getElementById("overlay").style.display = 'block';
-          document.getElementById("mask").style.display = 'block';
-          var result = prefix + 'masks/' + stack_mask.name + "/" + stack_mask.name + zeroPad(slider_index, 4) + suffix;
-          document.getElementById("mask").src = result;
+
+          // Horizontal
+          document.getElementById("horizontal-overlay").style.display = 'block';
+          document.getElementById("horizontal-mask").style.display = 'block';
+          document.getElementById("horizontal-mask").src = horizontal_result;
+
+          // Sagittal
+          document.getElementById("sagittal-overlay").style.display = 'block';
+          document.getElementById("sagittal-mask").style.display = 'block';
+          document.getElementById("sagittal-mask").src = sagittal_result;
         }
         else {
+          // Loader
           document.getElementById("loader").style.display = 'block';
-          document.getElementById("overlay").style.display = 'none';
-          document.getElementById("mask").style.display = 'none';
+
+          // Horizontal
+          document.getElementById("horizontal-overlay").style.display = 'none';
+          document.getElementById("horizontal-mask").style.display = 'none';
+
+          // Sagittal
+          document.getElementById("sagittal-overlay").style.display = 'none';
+          document.getElementById("sagittal-mask").style.display = 'none';
+
+          // Preload Mask
           preload(stack_mask);
         }
       }
       else {
         var result = prefix + "lines/blank" + suffix;
-        document.getElementById("mask").src = result;
+        document.getElementById("horizontal-mask").src = result;
+        document.getElementById("sagittal-mask").src = result;
       }
     }
   </script>
@@ -468,11 +514,23 @@
     </div>
 
     <div id="loader"></div>
-
-    <div id="viewer_container">
-      <img src="https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/lines/blank.png" id="image">
-      <img src="https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/lines/blank.png" id="overlay">
-      <img src="https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/lines/blank.png" id="mask">
+    <div id="viewer_wrapper" style="height: 500px;">
+      <div id="horizontal-viewer_container">
+        <img src="https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/lines/blank.png" class="image"
+          id="horizontal-image">
+        <img src="https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/lines/blank.png" class="overlay"
+          id="horizontal-overlay">
+        <img src="https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/lines/blank.png" class="mask"
+          id="horizontal-mask">
+      </div>
+      <div id="sagittal-viewer_container">
+        <img src="https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/lines/blank.png" class="image"
+          id="sagittal-image">
+        <img src="https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/lines/blank.png" class="overlay"
+          id="sagittal-overlay">
+        <img src="https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/lines/blank.png" class="mask"
+          id="sagittal-mask">
+      </div>
     </div>
   </div>
 </body>
