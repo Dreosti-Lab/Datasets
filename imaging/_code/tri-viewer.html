@@ -203,7 +203,9 @@
       constructor(name, type) {
         this.name = name;
         this.type = type;
-        this.images = [];
+        this.horizontal = [];
+        this.sagittal = [];
+        this.coronal = [];
         this.preloaded = false;
       }
     }
@@ -267,10 +269,21 @@
     requestIdleCallback(preload_reference, { timeout: 500 });
 
     function preload(stack) {
+      for (var i = 0; i < 512; i++) {
+        // Sagittal
+        var sagittal_result = prefix + stack.type + "/_sagittal/" + stack.name + "/" + stack.name + zeroPad(i, 4) + suffix;
+        stack.horizontal[i] = new Image();
+        stack.horizontal[i].src = sagittal_result;
+        // Coronal
+        var coronal_result = prefix + stack.type + "/_coronal/" + stack.name + "/" + stack.name + zeroPad(i, 4) + suffix;
+        stack.horizontal[i] = new Image();
+        stack.horizontal[i].src = coronal_result;
+      }
       for (var i = 0; i < 319; i++) {
-        var result = prefix + stack.type + "/" + stack.name + "/" + stack.name + zeroPad(i, 4) + suffix;
-        stack.images[i] = new Image();
-        stack.images[i].src = result;
+        // Horizontal
+        var horizontal_result = prefix + stack.type + "/" + stack.name + "/" + stack.name + zeroPad(i, 4) + suffix;
+        stack.horizontal[i] = new Image();
+        stack.horizontal[i].src = horizontal_result;
       }
     }
 
@@ -279,8 +292,8 @@
     }
 
     function check_preload(stack) {
-      if (typeof stack.images[318] != "undefined") {
-        if ((stack.images[318].naturalHeight == 0) && (!stack.images[318].complete)) {
+      if (typeof stack.horizontal[318] != "undefined") {
+        if ((stack.horizontal[318].naturalHeight == 0) && (!stack.horizontal[318].complete)) {
           stack.preloaded = false;
         }
         else {
