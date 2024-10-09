@@ -34,17 +34,6 @@
     background-color: rgb(255, 255, 255);
   }
 
-  #menu_container {
-    float: top;
-    width: 100%;
-    height: auto;
-    min-width: 360px;
-    max-width: 750px;
-    min-height: 20px;
-    max-height: 75px;
-    background-color: rgb(255, 255, 255);
-  }
-
   #slider_container {
     float: top;
     width: 100%;
@@ -55,6 +44,8 @@
     min-height: 20px;
     max-height: 75px;
     background-color: rgb(255, 255, 255);
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
 
   #slider {
@@ -88,8 +79,8 @@
 
   #loader {
     position: absolute;
-    left: 45%;
-    top: 75%;
+    left: 29%;
+    top: 28.5%;
     z-index: 1;
     width: 50px;
     height: 50px;
@@ -152,35 +143,90 @@
     }
   }
 
-  #horizontal-viewer_container {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    max-width: 750px;
-    background-color: rgb(255, 255, 255);
-    overflow: hidden;
+  /* Viewer Wrapper with two main rows: horizontal+sagittal, then coronal+menu */
+  #viewer_wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 840px;
+    height: 840px;
   }
 
-  #sagittal-viewer_container {
-    position: relative;
-    width: 100%;
+  /* Horizontal and Sagittal in one row */
+  #horizontal_sagittal_wrapper {
+    display: flex;
+    flex-direction: row;
     height: 62%;
-    max-width: 750px;
+    width: 100%;
     background-color: rgb(255, 255, 255);
-    overflow: hidden;
   }
 
-  #horizontal-viewer_container img,
-  #sagittal-viewer_container img {
+  /* Coronal and Menu in one row */
+  #coronal_menu_wrapper {
+    display: flex;
+    flex-direction: row;
+    height: 38%;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    margin-top: 10px;
+  }
+
+  /* Horizontal Viewer */
+  #horizontal_viewer_container {
+    position: relative;
+    width: 62%;
+    height: 100%;
+    background-color: rgb(42, 42, 42);
+  }
+
+  /* Sagittal Viewer */
+  #sagittal_viewer_container {
+    position: relative;
+    width: 38%;
+    height: 100%;
+    margin-left: 10px;
+    background-color: rgb(42, 42, 42);
+  }
+
+  /* Coronal Viewer */
+  #coronal_viewer_container {
+    position: relative;
+    width: 62%;
+    height: 100%;
+    background-color: rgb(42, 42, 42);
+  }
+
+  /* Menu Viewer */
+  #menu_viewer_container {
+    position: relative;
+    width: 38%;
+    height: 100%;
+    background-color: rgb(242, 242, 242);
+    margin-left: 10px;
+  }
+
+  #horizontal_viewer_container img {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    opacity: 100%;
   }
 
-  .image {}
+  #sagittal_viewer_container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translatex(319px) rotate(90deg);
+    transform-origin: top left;
+  }
+
+  #coronal_viewer_container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
 
   .overlay {
     filter: hue-rotate(0deg);
@@ -188,6 +234,28 @@
 
   .mask {
     filter: hue-rotate(0deg);
+  }
+
+  #horizontal-line {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    top: 50%;
+    left: 0;
+    background-color: #FF0000;
+    cursor: grab;
+    z-index: 10;
+  }
+
+  #vertical-line {
+    position: absolute;
+    width: 2px;
+    height: 100%;
+    top: 0;
+    left: 50%;
+    background-color: #00FF00;
+    cursor: grab;
+    z-index: 100;
   }
 </style>
 
@@ -322,6 +390,7 @@
           // Frame
           var horizontal_result = prefix + "lines/DAPI/DAPI" + zeroPad(slider_index, 4) + suffix;
           var sagittal_result = prefix + "lines/_sagittal/DAPI/DAPI" + zeroPad(slider_index, 4) + suffix;
+          var coronal_result = prefix + "lines/_coronal/DAPI/DAPI" + zeroPad(slider_index, 4) + suffix;
 
           // Loader
           document.getElementById("loader").style.display = 'none';
@@ -335,6 +404,11 @@
           document.getElementById("sagittal-overlay").style.display = 'block';
           document.getElementById("sagittal-mask").style.display = 'block';
           document.getElementById("sagittal-image").src = sagittal_result;
+
+          // Coronal
+          document.getElementById("coronal-overlay").style.display = 'block';
+          document.getElementById("coronal-mask").style.display = 'block';
+          document.getElementById("coronal-image").src = coronal_result;
         }
         else {
           // Loader
@@ -347,12 +421,17 @@
           // Sagittal
           document.getElementById("sagittal-overlay").style.display = 'none';
           document.getElementById("sagittal-mask").style.display = 'none';
+
+          // Coronal
+          document.getElementById("coronal-overlay").style.display = 'none';
+          document.getElementById("coronal-mask").style.display = 'none';
         }
       }
       else {
         var result = prefix + "lines/blank" + suffix;
         document.getElementById("horizontal-image").src = result;
         document.getElementById("sagittal-image").src = result;
+        document.getElementById("coronal-image").src = result;
       }
 
       // Select Line
@@ -371,6 +450,7 @@
           // Frame
           var horizontal_result = prefix + 'lines/' + stack_line.name + "/" + stack_line.name + zeroPad(slider_index, 4) + suffix;
           var sagittal_result = prefix + 'lines/_sagittal/' + stack_line.name + "/" + stack_line.name + zeroPad(slider_index, 4) + suffix;
+          var coronal_result = prefix + 'lines/_coronal/' + stack_line.name + "/" + stack_line.name + zeroPad(slider_index, 4) + suffix;
 
           // Loader
           document.getElementById("loader").style.display = 'none';
@@ -384,6 +464,11 @@
           document.getElementById("sagittal-overlay").style.display = 'block';
           document.getElementById("sagittal-mask").style.display = 'block';
           document.getElementById("sagittal-overlay").src = sagittal_result;
+
+          // Coronal
+          document.getElementById("coronal-overlay").style.display = 'block';
+          document.getElementById("coronal-mask").style.display = 'block';
+          document.getElementById("coronal-overlay").src = coronal_result;
         }
         else {
           // Loader
@@ -397,6 +482,10 @@
           document.getElementById("sagittal-overlay").style.display = 'none';
           document.getElementById("sagittal-mask").style.display = 'none';
 
+          // Coronal
+          document.getElementById("coronal-overlay").style.display = 'none';
+          document.getElementById("coronal-mask").style.display = 'none';
+
           // Preload Line
           preload(stack_line);
         }
@@ -405,6 +494,7 @@
         var result = prefix + "lines/blank" + suffix;
         document.getElementById("horizontal-overlay").src = result;
         document.getElementById("sagittal-overlay").src = result;
+        document.getElementById("coronal-overlay").src = result;
       }
 
       // Select Mask
@@ -423,6 +513,7 @@
           // Frame
           var horizontal_result = prefix + 'masks/' + stack_mask.name + "/" + stack_mask.name + zeroPad(slider_index, 4) + suffix;
           var sagittal_result = prefix + 'masks/_sagittal/' + stack_mask.name + "/" + stack_mask.name + zeroPad(slider_index, 4) + suffix;
+          var coronal_result = prefix + 'masks/_coronal/' + stack_mask.name + "/" + stack_mask.name + zeroPad(slider_index, 4) + suffix;
 
           // Loader
           document.getElementById("loader").style.display = 'none';
@@ -436,6 +527,11 @@
           document.getElementById("sagittal-overlay").style.display = 'block';
           document.getElementById("sagittal-mask").style.display = 'block';
           document.getElementById("sagittal-mask").src = sagittal_result;
+
+          // Coronal
+          document.getElementById("coronal-overlay").style.display = 'block';
+          document.getElementById("coronal-mask").style.display = 'block';
+          document.getElementById("coronal-mask").src = coronal_result;
         }
         else {
           // Loader
@@ -449,6 +545,10 @@
           document.getElementById("sagittal-overlay").style.display = 'none';
           document.getElementById("sagittal-mask").style.display = 'none';
 
+          // Coronal
+          document.getElementById("coronal-overlay").style.display = 'none';
+          document.getElementById("coronal-mask").style.display = 'none';
+
           // Preload Mask
           preload(stack_mask);
         }
@@ -457,69 +557,12 @@
         var result = prefix + "lines/blank" + suffix;
         document.getElementById("horizontal-mask").src = result;
         document.getElementById("sagittal-mask").src = result;
+        document.getElementById("coronal-mask").src = result;
       }
     }
   </script>
 
   <div id="container">
-    <div id="menu_container">
-      <center>
-        <label for="reference_menu">Reference<select name="reference_menu" id="reference_menu" oninput="update()">
-            <option value="DAPI" selected>DAPI</option>
-            <option value="none">-</option>
-          </select></label>
-        <label for="line_menu">Line<select name="line_menu" id="line_menu" oninput="update()">
-            <option value="none" selected>-</option>
-            <option value="AVP">AVP</option>
-            <option value="CB1">CB1</option>
-            <option value="CHAT1A">CHAT1A</option>
-            <option value="CRH">CRH</option>
-            <option value="DAT">DAT</option>
-            <option value="DLX5A">DLX5A</option>
-            <option value="GALN">GALN</option>
-            <option value="HDC">HDC</option>
-            <option value="KISS1">KISS1</option>
-            <option value="NPY">NPY</option>
-            <option value="OTPA">OTPA</option>
-            <option value="OTPB">OTPB</option>
-            <option value="OXT">OXT</option>
-            <option value="SLC6A4A">SLC6A4A</option>
-            <option value="SLC6A4B">SLC6A4B</option>
-            <option value="SST1">SST1</option>
-            <option value="TH1">TH1</option>
-            <option value="TH2">TH2</option>
-            <option value="VACHTB">VACHTB</option>
-          </select></label>
-        <label for="mask_menu">Mask<select name="mask_menu" id="mask_menu" oninput="update()">
-            <option value="none" selected>-</option>
-            <option value="dENT">dENT</option>
-            <option value="DL">DL</option>
-            <option value="GC">GC</option>
-            <option value="Hb">Hb</option>
-            <option value="Hc">Hc</option>
-            <option value="Hd">Hd</option>
-            <option value="IPN">IPN</option>
-            <option value="LC">LC</option>
-            <option value="LR">LR</option>
-            <option value="NLV">NLV</option>
-            <option value="NMLF">NMLF</option>
-            <option value="OB">OB</option>
-            <option value="OT">OT</option>
-            <option value="P">P</option>
-            <option value="PGZ">PGZ</option>
-            <option value="PoA">PoA</option>
-            <option value="PPd">PPd</option>
-            <option value="PPv">PPv</option>
-            <option value="PrT">PrT</option>
-            <option value="PT">PT</option>
-            <option value="sbP">sbP</option>
-            <option value="SR">SR</option>
-            <option value="TSc">TSc</option>
-            <option value="vENT">vENT</option>
-          </select></label>
-      </center>
-    </div>
-    <hr>
     <div id="slider_container">
       <center>
         <input type="range" min="0" max="318" value="100" id="slider" oninput="update()">
@@ -527,24 +570,99 @@
     </div>
 
     <div id="loader"></div>
-    <div id="viewer_wrapper" style="height: 500px;">
-      <div id="horizontal-viewer_container">
-        <img src="https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/lines/blank.png" class="image"
-          id="horizontal-image">
-        <img src="https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/lines/blank.png" class="overlay"
-          id="horizontal-overlay">
-        <img src="https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/lines/blank.png" class="mask"
-          id="horizontal-mask">
+    <div id="viewer_wrapper">
+      <div id="horizontal_sagittal_wrapper">
+        <div id="horizontal_viewer_container">
+          <img src="https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/lines/blank.png" class="image"
+            id="horizontal-image">
+          <img src="https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/lines/blank.png" class="overlay"
+            id="horizontal-overlay">
+          <img src="https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/lines/blank.png" class="mask"
+            id="horizontal-mask">
+          <div id="horizontal-line" draggable="true"></div>
+          <div id="vertical-line" draggable="true"></div>
+        </div>
+        <div id="sagittal_viewer_container">
+          <img src="https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/lines/blank.png" class="image"
+            id="sagittal-image">
+          <img src="https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/lines/blank.png" class="overlay"
+            id="sagittal-overlay">
+          <img src="https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/lines/blank.png" class="mask"
+            id="sagittal-mask">
+        </div>
       </div>
-      <div id="sagittal-viewer_container">
-        <img src="https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/lines/blank.png" class="image"
-          id="sagittal-image">
-        <img src="https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/lines/blank.png" class="overlay"
-          id="sagittal-overlay">
-        <img src="https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/lines/blank.png" class="mask"
-          id="sagittal-mask">
+      <div id="coronal_menu_wrapper">
+        <div id="coronal_viewer_container">
+          <img src="https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/lines/blank.png" class="image"
+            id="coronal-image">
+          <img src="https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/lines/blank.png" class="overlay"
+            id="coronal-overlay">
+          <img src="https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/lines/blank.png" class="mask"
+            id="coronal-mask">
+        </div>
+        <div id="menu_viewer_container">
+          <hr>
+          <center>
+            <label for="reference_menu">Reference<select name="reference_menu" id="reference_menu" oninput="update()">
+                <option value="DAPI" selected>DAPI</option>
+                <option value="none">-</option>
+              </select></label>
+            <label for="line_menu">Line<select name="line_menu" id="line_menu" oninput="update()">
+                <option value="none" selected>-</option>
+                <option value="AVP">AVP</option>
+                <option value="CB1">CB1</option>
+                <option value="CHAT1A">CHAT1A</option>
+                <option value="CRH">CRH</option>
+                <option value="DAT">DAT</option>
+                <option value="DLX5A">DLX5A</option>
+                <option value="GALN">GALN</option>
+                <option value="HDC">HDC</option>
+                <option value="KISS1">KISS1</option>
+                <option value="NPY">NPY</option>
+                <option value="OTPA">OTPA</option>
+                <option value="OTPB">OTPB</option>
+                <option value="OXT">OXT</option>
+                <option value="SLC6A4A">SLC6A4A</option>
+                <option value="SLC6A4B">SLC6A4B</option>
+                <option value="SST1">SST1</option>
+                <option value="TH1">TH1</option>
+                <option value="TH2">TH2</option>
+                <option value="VACHTB">VACHTB</option>
+              </select></label>
+            <label for="mask_menu">Mask<select name="mask_menu" id="mask_menu" oninput="update()">
+                <option value="none" selected>-</option>
+                <option value="dENT">dENT</option>
+                <option value="DL">DL</option>
+                <option value="GC">GC</option>
+                <option value="Hb">Hb</option>
+                <option value="Hc">Hc</option>
+                <option value="Hd">Hd</option>
+                <option value="IPN">IPN</option>
+                <option value="LC">LC</option>
+                <option value="LR">LR</option>
+                <option value="NLV">NLV</option>
+                <option value="NMLF">NMLF</option>
+                <option value="OB">OB</option>
+                <option value="OT">OT</option>
+                <option value="P">P</option>
+                <option value="PGZ">PGZ</option>
+                <option value="PoA">PoA</option>
+                <option value="PPd">PPd</option>
+                <option value="PPv">PPv</option>
+                <option value="PrT">PrT</option>
+                <option value="PT">PT</option>
+                <option value="sbP">sbP</option>
+                <option value="SR">SR</option>
+                <option value="TSc">TSc</option>
+                <option value="vENT">vENT</option>
+              </select>
+            </label>
+          </center>
+          <hr>
+        </div>
       </div>
     </div>
+  </div>
   </div>
 </body>
 
