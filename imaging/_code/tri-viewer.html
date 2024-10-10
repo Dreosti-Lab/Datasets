@@ -80,7 +80,7 @@
   #loader {
     position: absolute;
     left: 29%;
-    top: 28.5%;
+    top: 33.5%;
     z-index: 1;
     width: 50px;
     height: 50px;
@@ -146,62 +146,64 @@
   /* Viewer Wrapper with two main rows: horizontal+sagittal, then coronal+menu */
   #viewer_wrapper {
     display: flex;
+    flex-direction: row;
+    width: 1026px;
+    height: 640px;
+  }
+
+  /* Horizontal and Menu in one column */
+  #horizontal_menu_wrapper {
+    display: flex;
     flex-direction: column;
-    width: 840px;
-    height: 840px;
+    height: 100%;
+    width: 50%;
+    background-color: rgb(242, 242, 242);
   }
 
-  /* Horizontal and Sagittal in one row */
-  #horizontal_sagittal_wrapper {
+  /* Coronal and Sagittal in one column */
+  #coronal_sagittal_wrapper {
     display: flex;
-    flex-direction: row;
-    height: 62%;
-    width: 100%;
-    background-color: rgb(255, 255, 255);
-  }
-
-  /* Coronal and Menu in one row */
-  #coronal_menu_wrapper {
-    display: flex;
-    flex-direction: row;
-    height: 38%;
-    width: 100%;
-    background-color: rgb(255, 255, 255);
-    margin-top: 10px;
+    flex-direction: column;
+    height: 100%;
+    width: 50%;
+    background-color: rgb(142, 142, 142);
   }
 
   /* Horizontal Viewer */
   #horizontal_viewer_container {
     position: relative;
-    width: 62%;
-    height: 100%;
-    background-color: rgb(42, 42, 42);
-  }
-
-  /* Sagittal Viewer */
-  #sagittal_viewer_container {
-    position: relative;
-    width: 38%;
-    height: 100%;
-    margin-left: 10px;
-    background-color: rgb(42, 42, 42);
-  }
-
-  /* Coronal Viewer */
-  #coronal_viewer_container {
-    position: relative;
-    width: 62%;
-    height: 100%;
+    width: 100%;
+    height: 80%;
     background-color: rgb(42, 42, 42);
   }
 
   /* Menu Viewer */
   #menu_viewer_container {
     position: relative;
-    width: 38%;
-    height: 100%;
+    width: 100%;
+    height: 20%;
     background-color: rgb(242, 242, 242);
-    margin-left: 10px;
+    margin-left: 2px;
+  }
+
+  /* Coronal Viewer */
+  #coronal_viewer_container {
+    position: relative;
+    width: 100%;
+    height: 50%;
+    background-color: rgb(42, 42, 42);
+    border-left: 2px solid rgb(165, 13, 196);
+    ;
+  }
+
+  /* Sagittal Viewer */
+  #sagittal_viewer_container {
+    position: relative;
+    width: 100%;
+    height: 50%;
+    margin-top: 2px;
+    background-color: rgb(42, 42, 42);
+    border-left: 2px solid rgb(223, 209, 24);
   }
 
   #horizontal_viewer_container img {
@@ -212,15 +214,15 @@
     height: 100%;
   }
 
-  #sagittal_viewer_container img {
+  #coronal_viewer_container img {
     position: absolute;
     top: 0;
     left: 0;
-    transform: translatex(319px) rotate(90deg);
-    transform-origin: top left;
+    width: 100%;
+    height: 100%;
   }
 
-  #coronal_viewer_container img {
+  #sagittal_viewer_container img {
     position: absolute;
     top: 0;
     left: 0;
@@ -242,9 +244,10 @@
     height: 2px;
     top: 50%;
     left: 0;
-    background-color: #FF0000;
-    cursor: grab;
+    background-color: rgb(165, 13, 196);
+    cursor: crosshair;
     z-index: 10;
+    opacity: 0.4;
   }
 
   #vertical-line {
@@ -253,10 +256,34 @@
     height: 100%;
     top: 0;
     left: 50%;
-    background-color: #00FF00;
-    cursor: grab;
-    z-index: 100;
+    background-color: rgb(223, 209, 24);
+    cursor: crosshair;
+    z-index: 10;
+    opacity: 0.4;
   }
+
+  #coronal-line {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    top: 50%;
+    left: 0;
+    background-color: rgb(165, 13, 196);
+    z-index: 10;
+    opacity: 0.4;
+  }
+
+  #sagittal-line {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    top: 50%;
+    left: 0;
+    background-color: rgb(223, 209, 24);
+    z-index: 10;
+    opacity: 0.4;
+  }
+
 </style>
 
 <body>
@@ -267,6 +294,7 @@
     const prefix = "https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/";
     const suffix = ".png";
 
+    // Define Stack Class
     class Stack {
       constructor(name, type) {
         this.name = name;
@@ -277,6 +305,11 @@
         this.preloaded = false;
       }
     }
+
+    // Cursor State
+    var slider_index = 160;
+    var coronal_index = 256;
+    var sagittal_index = 256;
 
     // Specify reference stacks
     stack_reference = new Stack("DAPI", "lines");
@@ -375,10 +408,14 @@
 
     function update() {
       // Get UI values
-      var slider_index = document.getElementById("slider").value;
+      slider_index = document.getElementById("slider").value;
       var reference_option = document.getElementById("reference_menu").value
       var line_option = document.getElementById("line_menu").value
       var mask_option = document.getElementById("mask_menu").value
+
+      // Update depth indicators
+      document.getElementById("coronal-line").style.top = `${slider_index}px`;
+      document.getElementById("sagittal-line").style.top = `${slider_index}px`;
 
       // Select and Display Reference
       if (reference_option == "DAPI") {
@@ -389,8 +426,8 @@
         if (stack_reference.preloaded) {
           // Frame
           var horizontal_result = prefix + "lines/DAPI/DAPI" + zeroPad(slider_index, 4) + suffix;
-          var sagittal_result = prefix + "lines/_sagittal/DAPI/DAPI" + zeroPad(slider_index, 4) + suffix;
-          var coronal_result = prefix + "lines/_coronal/DAPI/DAPI" + zeroPad(slider_index, 4) + suffix;
+          var sagittal_result = prefix + "lines/_sagittal/DAPI/DAPI" + zeroPad(sagittal_index, 4) + suffix;
+          var coronal_result = prefix + "lines/_coronal/DAPI/DAPI" + zeroPad(coronal_index, 4) + suffix;
 
           // Loader
           document.getElementById("loader").style.display = 'none';
@@ -449,8 +486,8 @@
         if (stack_line.preloaded) {
           // Frame
           var horizontal_result = prefix + 'lines/' + stack_line.name + "/" + stack_line.name + zeroPad(slider_index, 4) + suffix;
-          var sagittal_result = prefix + 'lines/_sagittal/' + stack_line.name + "/" + stack_line.name + zeroPad(slider_index, 4) + suffix;
-          var coronal_result = prefix + 'lines/_coronal/' + stack_line.name + "/" + stack_line.name + zeroPad(slider_index, 4) + suffix;
+          var sagittal_result = prefix + 'lines/_sagittal/' + stack_line.name + "/" + stack_line.name + zeroPad(sagittal_index, 4) + suffix;
+          var coronal_result = prefix + 'lines/_coronal/' + stack_line.name + "/" + stack_line.name + zeroPad(coronal_index, 4) + suffix;
 
           // Loader
           document.getElementById("loader").style.display = 'none';
@@ -512,8 +549,8 @@
         if (stack_mask.preloaded) {
           // Frame
           var horizontal_result = prefix + 'masks/' + stack_mask.name + "/" + stack_mask.name + zeroPad(slider_index, 4) + suffix;
-          var sagittal_result = prefix + 'masks/_sagittal/' + stack_mask.name + "/" + stack_mask.name + zeroPad(slider_index, 4) + suffix;
-          var coronal_result = prefix + 'masks/_coronal/' + stack_mask.name + "/" + stack_mask.name + zeroPad(slider_index, 4) + suffix;
+          var sagittal_result = prefix + 'masks/_sagittal/' + stack_mask.name + "/" + stack_mask.name + zeroPad(sagittal_index, 4) + suffix;
+          var coronal_result = prefix + 'masks/_coronal/' + stack_mask.name + "/" + stack_mask.name + zeroPad(coronal_index, 4) + suffix;
 
           // Loader
           document.getElementById("loader").style.display = 'none';
@@ -560,18 +597,60 @@
         document.getElementById("coronal-mask").src = result;
       }
     }
+
+    // Interactive Controls
+    document.addEventListener('DOMContentLoaded', () => {
+      const horizontal_container = document.getElementById("horizontal_viewer_container");
+      const horizontal_cursor = document.getElementById("horizontal-line");
+      const vertical_cursor = document.getElementById("vertical-line");
+
+      // State
+      let is_dragging = false;
+
+      // Mouse down event to start/stop dragging
+      horizontal_container.addEventListener('mousedown', (event) => {
+        is_dragging = !is_dragging;
+        if (is_dragging) {
+          horizontal_cursor.style.opacity = 0.75;
+          vertical_cursor.style.opacity = 0.75;
+        }
+        else {
+          horizontal_cursor.style.opacity = 0.4;
+          vertical_cursor.style.opacity = 0.4;
+
+        }
+        updateCursor(event);
+      });
+
+      // Mouse move event to drag the lines while the button is held down
+      horizontal_container.addEventListener('mousemove', (event) => {
+        if (is_dragging) {
+          updateCursor(event);
+        }
+      });
+
+      // Update cursor positions
+      function updateCursor(event) {
+        const rect = horizontal_container.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+
+        const boundedX = Math.max(0, Math.min(rect.width, x));
+        const boundedY = Math.max(0, Math.min(rect.height, y));
+
+        horizontal_cursor.style.top = `${boundedY}px`;
+        vertical_cursor.style.left = `${boundedX}px`;
+
+        sagittal_index = Math.round(boundedX);
+        coronal_index = Math.round(boundedY);
+      }
+    });
   </script>
 
   <div id="container">
-    <div id="slider_container">
-      <center>
-        <input type="range" min="0" max="318" value="100" id="slider" oninput="update()">
-      </center>
-    </div>
-
     <div id="loader"></div>
     <div id="viewer_wrapper">
-      <div id="horizontal_sagittal_wrapper">
+      <div id="horizontal_menu_wrapper">
         <div id="horizontal_viewer_container">
           <img src="https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/lines/blank.png" class="image"
             id="horizontal-image">
@@ -581,24 +660,6 @@
             id="horizontal-mask">
           <div id="horizontal-line" draggable="true"></div>
           <div id="vertical-line" draggable="true"></div>
-        </div>
-        <div id="sagittal_viewer_container">
-          <img src="https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/lines/blank.png" class="image"
-            id="sagittal-image">
-          <img src="https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/lines/blank.png" class="overlay"
-            id="sagittal-overlay">
-          <img src="https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/lines/blank.png" class="mask"
-            id="sagittal-mask">
-        </div>
-      </div>
-      <div id="coronal_menu_wrapper">
-        <div id="coronal_viewer_container">
-          <img src="https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/lines/blank.png" class="image"
-            id="coronal-image">
-          <img src="https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/lines/blank.png" class="overlay"
-            id="coronal-overlay">
-          <img src="https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/lines/blank.png" class="mask"
-            id="coronal-mask">
         </div>
         <div id="menu_viewer_container">
           <hr>
@@ -659,9 +720,35 @@
             </label>
           </center>
           <hr>
+          <div id="slider_container">
+            <center>
+              <input type="range" min="0" max="318" value="100" id="slider" oninput="update()">
+            </center>
+          </div>
+        </div>
+      </div>
+      <div id="coronal_sagittal_wrapper">
+        <div id="coronal_viewer_container">
+          <img src="https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/lines/blank.png" class="image"
+            id="coronal-image">
+          <img src="https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/lines/blank.png" class="overlay"
+            id="coronal-overlay">
+          <img src="https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/lines/blank.png" class="mask"
+            id="coronal-mask">
+          <div id="coronal-line" draggable="false"></div>
+        </div>
+        <div id="sagittal_viewer_container">
+          <img src="https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/lines/blank.png" class="image"
+            id="sagittal-image">
+          <img src="https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/lines/blank.png" class="overlay"
+            id="sagittal-overlay">
+          <img src="https://raw.githubusercontent.com/Dreosti-Lab/Datasets/main/imaging/lines/blank.png" class="mask"
+            id="sagittal-mask">
+          <div id="sagittal-line" draggable="false"></div>
         </div>
       </div>
     </div>
+  </div>
   </div>
   </div>
 </body>
