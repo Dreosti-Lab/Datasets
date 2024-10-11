@@ -440,17 +440,17 @@ hr {
     function preload(stack) {
       for (var i = 0; i < 512; i++) {
         // Sagittal
-        var sagittal_result = prefix + stack.type + "/_sagittal/" + stack.name + "/" + stack.name + zeroPad(i, 4) + suffix;
+        var sagittal_result = prefix + stack.type + "/sagittal/" + stack.name + "/" + stack.name + zeroPad(i, 4) + suffix;
         stack.horizontal[i] = new Image();
         stack.horizontal[i].src = sagittal_result;
         // Coronal
-        var coronal_result = prefix + stack.type + "/_coronal/" + stack.name + "/" + stack.name + zeroPad(i, 4) + suffix;
+        var coronal_result = prefix + stack.type + "/coronal/" + stack.name + "/" + stack.name + zeroPad(i, 4) + suffix;
         stack.horizontal[i] = new Image();
         stack.horizontal[i].src = coronal_result;
       }
       for (var i = 0; i < 319; i++) {
         // Horizontal
-        var horizontal_result = prefix + stack.type + "/" + stack.name + "/" + stack.name + zeroPad(i, 4) + suffix;
+        var horizontal_result = prefix + stack.type + "/horizontal/" + stack.name + "/" + stack.name + zeroPad(i, 4) + suffix;
         stack.horizontal[i] = new Image();
         stack.horizontal[i].src = horizontal_result;
       }
@@ -493,9 +493,9 @@ hr {
         // Display reference
         if (stack_reference.preloaded) {
           // Frame
-          var horizontal_result = prefix + "lines/DAPI/DAPI" + zeroPad(slider_index, 4) + suffix;
-          var sagittal_result = prefix + "lines/_sagittal/DAPI/DAPI" + zeroPad(sagittal_index, 4) + suffix;
-          var coronal_result = prefix + "lines/_coronal/DAPI/DAPI" + zeroPad(coronal_index, 4) + suffix;
+          var horizontal_result = prefix + "lines/horizontal/DAPI/DAPI" + zeroPad(slider_index, 4) + suffix;
+          var sagittal_result = prefix + "lines/sagittal/DAPI/DAPI" + zeroPad(sagittal_index, 4) + suffix;
+          var coronal_result = prefix + "lines/coronal/DAPI/DAPI" + zeroPad(coronal_index, 4) + suffix;
 
           // Loader
           document.getElementById("loader").style.display = 'none';
@@ -553,9 +553,9 @@ hr {
 
         if (stack_line.preloaded) {
           // Frame
-          var horizontal_result = prefix + 'lines/' + stack_line.name + "/" + stack_line.name + zeroPad(slider_index, 4) + suffix;
-          var sagittal_result = prefix + 'lines/_sagittal/' + stack_line.name + "/" + stack_line.name + zeroPad(sagittal_index, 4) + suffix;
-          var coronal_result = prefix + 'lines/_coronal/' + stack_line.name + "/" + stack_line.name + zeroPad(coronal_index, 4) + suffix;
+          var horizontal_result = prefix + 'lines/horizontal/' + stack_line.name + "/" + stack_line.name + zeroPad(slider_index, 4) + suffix;
+          var sagittal_result = prefix + 'lines/sagittal/' + stack_line.name + "/" + stack_line.name + zeroPad(sagittal_index, 4) + suffix;
+          var coronal_result = prefix + 'lines/coronal/' + stack_line.name + "/" + stack_line.name + zeroPad(coronal_index, 4) + suffix;
 
           // Loader
           document.getElementById("loader").style.display = 'none';
@@ -616,9 +616,9 @@ hr {
 
         if (stack_mask.preloaded) {
           // Frame
-          var horizontal_result = prefix + 'masks/' + stack_mask.name + "/" + stack_mask.name + zeroPad(slider_index, 4) + suffix;
-          var sagittal_result = prefix + 'masks/_sagittal/' + stack_mask.name + "/" + stack_mask.name + zeroPad(sagittal_index, 4) + suffix;
-          var coronal_result = prefix + 'masks/_coronal/' + stack_mask.name + "/" + stack_mask.name + zeroPad(coronal_index, 4) + suffix;
+          var horizontal_result = prefix + 'masks/horizontal/' + stack_mask.name + "/" + stack_mask.name + zeroPad(slider_index, 4) + suffix;
+          //var sagittal_result = prefix + 'masks/sagittal/' + stack_mask.name + "/" + stack_mask.name + zeroPad(sagittal_index, 4) + suffix;
+          //var coronal_result = prefix + 'masks/coronal/' + stack_mask.name + "/" + stack_mask.name + zeroPad(coronal_index, 4) + suffix;
 
           // Loader
           document.getElementById("loader").style.display = 'none';
@@ -629,14 +629,14 @@ hr {
           document.getElementById("horizontal-mask").src = horizontal_result;
 
           // Sagittal
-          document.getElementById("sagittal-overlay").style.display = 'block';
-          document.getElementById("sagittal-mask").style.display = 'block';
-          document.getElementById("sagittal-mask").src = sagittal_result;
+          //document.getElementById("sagittal-overlay").style.display = 'block';
+          //document.getElementById("sagittal-mask").style.display = 'block';
+          //document.getElementById("sagittal-mask").src = sagittal_result;
 
           // Coronal
-          document.getElementById("coronal-overlay").style.display = 'block';
-          document.getElementById("coronal-mask").style.display = 'block';
-          document.getElementById("coronal-mask").src = coronal_result;
+          //document.getElementById("coronal-overlay").style.display = 'block';
+          //document.getElementById("coronal-mask").style.display = 'block';
+          //document.getElementById("coronal-mask").src = coronal_result;
         }
         else {
           // Loader

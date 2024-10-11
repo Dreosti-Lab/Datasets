@@ -282,7 +282,7 @@
 
     function preload(stack) {
       for (var i = 0; i < 319; i++) {
-        var result = prefix + stack.type + "/" + stack.name + "/" + stack.name + zeroPad(i, 4) + suffix;
+        var result = prefix + stack.type + "/horizontal/" + stack.name + "/" + stack.name + zeroPad(i, 4) + suffix;
         stack.images[i] = new Image();
         stack.images[i].src = result;
       }
@@ -322,7 +322,7 @@
           document.getElementById("loader").style.display = 'none';
           document.getElementById("overlay").style.display = 'block';
           document.getElementById("mask").style.display = 'block';
-          var result = prefix + "lines/DAPI/DAPI" + zeroPad(slider_index, 4) + suffix;
+          var result = prefix + "lines//horizontal/DAPI/DAPI" + zeroPad(slider_index, 4) + suffix;
           document.getElementById("image").src = result;
         }
         else {
@@ -353,7 +353,7 @@
           document.getElementById("loader").style.display = 'none';
           document.getElementById("overlay").style.display = 'block';
           document.getElementById("mask").style.display = 'block';
-          var result = prefix + 'lines/' + stack_line.name + "/" + stack_line.name + zeroPad(slider_index, 4) + suffix;
+          var result = prefix + 'lines//horizontal/' + stack_line.name + "/" + stack_line.name + zeroPad(slider_index, 4) + suffix;
           document.getElementById("overlay").src = result;
         }
         else {
@@ -385,7 +385,7 @@
           document.getElementById("loader").style.display = 'none';
           document.getElementById("overlay").style.display = 'block';
           document.getElementById("mask").style.display = 'block';
-          var result = prefix + 'masks/' + stack_mask.name + "/" + stack_mask.name + zeroPad(slider_index, 4) + suffix;
+          var result = prefix + 'masks/horizontal/' + stack_mask.name + "/" + stack_mask.name + zeroPad(slider_index, 4) + suffix;
           document.getElementById("mask").src = result;
         }
         else {
