@@ -44,14 +44,14 @@
     min-height: 20px;
     max-height: 75px;
     background-color: rgb(255, 255, 255);
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
 
   #slider {
     -webkit-appearance: none;
     width: 95%;
-    height: 5px;
+    height: 6px;
     background: rgb(25, 25, 25);
     outline: none;
     opacity: 0.7;
@@ -62,10 +62,11 @@
   #slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 11px;
-    height: 25px;
-    background: #dddddd;
-    outline: rgb(25, 25, 25);
+    width: 12px;
+    height: 30px;
+    /*background: #dddddd;*/
+    background: #8a8989;
+    outline: rgb(24, 24, 201);
     cursor: pointer;
   }
 
@@ -148,7 +149,7 @@
     display: flex;
     flex-direction: row;
     width: 1026px;
-    height: 640px;
+    height: 650px;
   }
 
   /* Horizontal and Menu in one column */
@@ -166,14 +167,15 @@
     flex-direction: column;
     height: 100%;
     width: 50%;
-    background-color: rgb(142, 142, 142);
+    /*background-color: rgb(142, 142, 142);*/
+    background-color: rgb(242, 242, 242);
   }
 
   /* Horizontal Viewer */
   #horizontal_viewer_container {
     position: relative;
     width: 100%;
-    height: 80%;
+    height: 78%;
     background-color: rgb(42, 42, 42);
   }
 
@@ -183,7 +185,7 @@
     width: 100%;
     height: 20%;
     background-color: rgb(242, 242, 242);
-    margin-left: 2px;
+    margin-left: 4px;
   }
 
   /* Coronal Viewer */
@@ -191,8 +193,10 @@
     position: relative;
     width: 100%;
     height: 50%;
-    background-color: rgb(42, 42, 42);
-    border-left: 2px solid rgb(165, 13, 196);
+    /*background-color: rgb(42, 42, 42);*/
+    background-color: rgb(242, 242, 242);
+    /*border-left: 4px solid rgb(165, 13, 196);*/
+    border-left: 6px solid rgb(242, 242, 242);
     ;
   }
 
@@ -201,9 +205,11 @@
     position: relative;
     width: 100%;
     height: 50%;
-    margin-top: 2px;
-    background-color: rgb(42, 42, 42);
-    border-left: 2px solid rgb(223, 209, 24);
+    margin-top: 5px;
+    /*background-color: rgb(42, 42, 42);*/
+    background-color: rgb(242, 242, 242);
+    /*border-left: 4px solid rgb(223, 209, 24);*/
+    border-left: 6px solid rgb(242, 242, 242);
   }
 
   #horizontal_viewer_container img {
@@ -247,7 +253,7 @@
     background-color: rgb(165, 13, 196);
     cursor: crosshair;
     z-index: 10;
-    opacity: 0.4;
+    opacity: 0.5;
   }
 
   #vertical-line {
@@ -259,30 +265,92 @@
     background-color: rgb(223, 209, 24);
     cursor: crosshair;
     z-index: 10;
-    opacity: 0.4;
+    opacity: 0.5;
   }
 
   #coronal-line {
     position: absolute;
     width: 100%;
-    height: 2px;
+    height: 3px;
     top: 50%;
     left: 0;
     background-color: rgb(165, 13, 196);
     z-index: 10;
-    opacity: 0.4;
+    opacity: 0.5;
   }
 
   #sagittal-line {
     position: absolute;
     width: 100%;
-    height: 2px;
+    height: 3px;
     top: 50%;
     left: 0;
     background-color: rgb(223, 209, 24);
     z-index: 10;
-    opacity: 0.4;
+    opacity: 0.5;
   }
+
+
+  label[for="reference_menu"] {
+  font-family: Arial, sans-serif; /* Choose your desired font-family */
+  font-size: 18px; /* Adjust the font size as needed */
+  font-weight: bold; /* Set to 'normal' if you do not want bold text */
+  color: #333333; /* Choose your desired font color */
+}
+
+label[for="mask_menu"] {
+  font-family: Arial, sans-serif; /* Choose your desired font-family */
+  font-size: 18px; /* Adjust the font size as needed */
+  font-weight: bold; /* Set to 'normal' if you do not want bold text */
+  color: #333333; /* Choose your desired font color */
+}
+
+label[for="line_menu"] {
+  font-family: Arial, sans-serif; /* Choose your desired font-family */
+  font-size: 18px; /* Adjust the font size as needed */
+  font-weight: bold; /* Set to 'normal' if you do not want bold text */
+  color: #333333; /* Choose your desired font color */
+}
+
+
+#reference_menu {
+  font-family: Arial, sans-serif; /* Choose your desired font-family */
+  font-size: 18px; /* Adjust the font size as needed */
+  font-weight: normal; /* Set to 'normal' if you do not want bold text */
+  color: #333333; /* Choose your desired font color */
+}
+
+#line_menu {
+  font-family: Arial, sans-serif; /* Choose your desired font-family */
+  font-size: 18px; /* Adjust the font size as needed */
+  font-weight: normal; /* Set to 'normal' if you do not want bold text */
+  color: #333333; /* Choose your desired font color */
+}
+
+#Mask_menu {
+  font-family: Arial, sans-serif; /* Choose your desired font-family */
+  font-size: 18px; /* Adjust the font size as needed */
+  font-weight: normal; /* Set to 'normal' if you do not want bold text */
+  color: #333333; /* Choose your desired font color */
+}
+
+
+label[for="reference_menu"],
+label[for="line_menu"],
+label[for="mask_menu"] {
+  margin-right: 20px; /* Adjust the spacing value as needed */
+  margin-top: 10px; /* Adjust the spacing value as needed */
+  display: inline-block; /* Ensures margin-top applies correctly to inline elements */
+}
+
+hr {
+  height: 1px; /* Adjust the height to make it thicker */
+  background-color: #333333; /* Change the color as needed */
+  border: none; /* Remove any border to have a solid color */
+  width: 95%; /* Adjust the width of the line, or set it to 100% for full width */
+  margin: 10px auto; /* Optional: Center the line and adjust vertical spacing */
+}
+
 
 </style>
 
