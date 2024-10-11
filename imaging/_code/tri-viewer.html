@@ -43,9 +43,9 @@
     max-width: 750px;
     min-height: 20px;
     max-height: 75px;
-    background-color: rgb(255, 255, 255);
-    margin-top: 20px;
-    margin-bottom: 20px;
+    background-color: rgb(242, 242, 242);
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
 
   #slider {
@@ -193,9 +193,7 @@
     position: relative;
     width: 100%;
     height: 50%;
-    /*background-color: rgb(42, 42, 42);*/
     background-color: rgb(242, 242, 242);
-    /*border-left: 4px solid rgb(165, 13, 196);*/
     border-left: 6px solid rgb(242, 242, 242);
     ;
   }
@@ -206,9 +204,7 @@
     width: 100%;
     height: 50%;
     margin-top: 5px;
-    /*background-color: rgb(42, 42, 42);*/
     background-color: rgb(242, 242, 242);
-    /*border-left: 4px solid rgb(223, 209, 24);*/
     border-left: 6px solid rgb(242, 242, 242);
   }
 
@@ -339,7 +335,7 @@ label[for="reference_menu"],
 label[for="line_menu"],
 label[for="mask_menu"] {
   margin-right: 20px; /* Adjust the spacing value as needed */
-  margin-top: 10px; /* Adjust the spacing value as needed */
+  margin-top: 2px; /* Adjust the spacing value as needed */
   display: inline-block; /* Ensures margin-top applies correctly to inline elements */
 }
 
@@ -729,14 +725,14 @@ hr {
           <div id="horizontal-line" draggable="true"></div>
           <div id="vertical-line" draggable="true"></div>
         </div>
-        <div id="menu_viewer_container">
+        <div id="menu_viewer_container">  
           <hr>
           <center>
             <label for="reference_menu">Reference<select name="reference_menu" id="reference_menu" oninput="update()">
                 <option value="DAPI" selected>DAPI</option>
                 <option value="none">-</option>
               </select></label>
-            <label for="line_menu">Line<select name="line_menu" id="line_menu" oninput="update()">
+            <label for="line_menu">Stain<select name="line_menu" id="line_menu" oninput="update()">
                 <option value="none" selected>-</option>
                 <option value="AVP">AVP</option>
                 <option value="CB1">CB1</option>
@@ -787,7 +783,6 @@ hr {
               </select>
             </label>
           </center>
-          <hr>
           <div id="slider_container">
             <center>
               <input type="range" min="0" max="318" value="100" id="slider" oninput="update()">
