@@ -2,7 +2,7 @@ import os
 import numpy as np
 from PIL import Image
 
-# Specify line and scale values
+# # Specify line and scale values
 # line_name = 'CRH'
 # baseline = -0.42
 # scale = 14.32
@@ -15,6 +15,14 @@ from PIL import Image
 # baseline = -8
 # scale = 3
 
+# line_name = 'DAT'
+# baseline = -0.10
+# scale = 12
+
+# line_name = 'GALN'
+# baseline = 0
+# scale = 15.2
+
 # line_name = 'DLX5A'
 # baseline = 1
 # scale = 13
@@ -23,13 +31,13 @@ from PIL import Image
 # baseline = 0.8
 # scale = 2
 
-line_name = 'AVP'
-baseline = 1
-scale = 15
+# line_name = 'AVP'
+# baseline = 1
+# scale = 15
 
-# line_name = 'SLC6A4B'
-# baseline = -0.03
-# scale = 8.17
+# line_name = 'SLC6A4A'
+# baseline = 0.8
+# scale = 6
 
 # line_name = 'TH1'
 # baseline = 1.24
@@ -39,9 +47,9 @@ scale = 15
 # baseline = 1.11
 # scale = 3.5
 
-# line_name = 'VACHT'
-# baseline = -0.59
-# scale = 40.26
+line_name = 'VACHTB'
+baseline = -0.59
+scale = 40.26
 
 # line_name = 'CHAT1A'
 # baseline = -0.56
@@ -53,9 +61,9 @@ scale = 15
 
 # Build paths
 base_folder = '/Volumes/T7/Peptides'
-stack_path = base_folder + '/'+ line_name + '/AVP_s.tif'
-mask_path = base_folder + '/masks/' + 'DAPI_s' + '.tif'
-output_folder = base_folder + '/processed/' + line_name
+stack_path = base_folder + '/'+ line_name + '/VACHTB_c.tif'
+mask_path = base_folder + '/masks/' + 'DAPI_c' + '.tif'
+output_folder = '/Users/alizeekastler/Documents/GitHub/Datasets/imaging/lines/' + 'coronal/' + line_name
 
 # Create output folder (if it does not exist)
 if not os.path.exists(output_folder):
@@ -70,7 +78,7 @@ num_frames = line_data.n_frames
 mask_data = Image.open(mask_path)
 
 # Convert raw TIFF to PNG with alpha layers
-container = np.zeros((width,height,4), dtype=np.uint8)
+container = np.zeros((height,width,4), dtype=np.uint8)
 for i in range(num_frames):
     line_data.seek(i)
     mask_data.seek(i)
