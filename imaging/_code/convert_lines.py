@@ -47,9 +47,9 @@ from PIL import Image
 # baseline = 1.11
 # scale = 3.5
 
-line_name = 'VACHTB'
-baseline = -0.59
-scale = 40.26
+# line_name = 'VACHTB'
+# baseline = -0.59
+# scale = 40.26
 
 # line_name = 'CHAT1A'
 # baseline = -0.56
@@ -59,9 +59,30 @@ scale = 40.26
 # baseline = -0.43
 # scale = 49.23
 
+
+line_name = 'HDC'
+baseline = 1.2
+scale = 2
+
+line_name = 'KISS1'
+baseline = 1.2
+scale = 2
+
+line_name = 'NPY'
+baseline = 0
+scale = 16
+
+line_name = 'OXT'
+baseline = 0
+scale = 50
+
+line_name = 'OTPB'
+baseline = 1.5
+scale = 4
+
 # Build paths
 base_folder = '/Volumes/T7/Peptides'
-stack_path = base_folder + '/'+ line_name + '/VACHTB_c.tif'
+stack_path = base_folder + '/'+ line_name + '/OTPB_c.tif'
 mask_path = base_folder + '/masks/' + 'DAPI_c' + '.tif'
 output_folder = '/Users/alizeekastler/Documents/GitHub/Datasets/imaging/lines/' + 'coronal/' + line_name
 
