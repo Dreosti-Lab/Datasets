@@ -59,7 +59,6 @@ from PIL import Image
 # baseline = -0.43
 # scale = 49.23
 
-
 # line_name = 'HDC'
 # baseline = 1.2
 # scale = 2
@@ -84,9 +83,22 @@ line_name = 'ARX'
 baseline = 0.5
 scale = 8
 
+line_name = 'ISL1'
+baseline = 0.5
+scale = 15
+
+line_name = 'TAC1'
+baseline = 0.5
+scale = 15
+
+line_name = 'TAC2A'
+baseline = 0.5
+scale = 3 
+
+
 # Build paths
 base_folder = '/Volumes/T7/Peptides'
-stack_path = base_folder + '/'+ line_name + '/ARX_s.tif'
+stack_path = base_folder + '/'+ line_name + '/TAC2A_s.tif'
 mask_path = base_folder + '/masks/' + 'DAPI_s' + '.tif'
 output_folder = '/Users/alizeekastler/Documents/GitHub/Datasets/imaging/lines/' + 'sagittal/' + line_name
 
