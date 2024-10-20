@@ -60,31 +60,35 @@ from PIL import Image
 # scale = 49.23
 
 
-line_name = 'HDC'
-baseline = 1.2
-scale = 2
+# line_name = 'HDC'
+# baseline = 1.2
+# scale = 2
 
-line_name = 'KISS1'
-baseline = 1.2
-scale = 2
+# line_name = 'KISS1'
+# baseline = 1.2
+# scale = 2
 
-line_name = 'NPY'
-baseline = 0
-scale = 16
+# line_name = 'NPY'
+# baseline = 0
+# scale = 16
 
-line_name = 'OXT'
-baseline = 0
-scale = 50
+# line_name = 'OXT'
+# baseline = 0
+# scale = 50
 
-line_name = 'OTPB'
-baseline = 1.5
-scale = 4
+# line_name = 'OTPB'
+# baseline = 1.5
+# scale = 4
+
+line_name = 'ARX'
+baseline = 0.5
+scale = 8
 
 # Build paths
 base_folder = '/Volumes/T7/Peptides'
-stack_path = base_folder + '/'+ line_name + '/OTPB_c.tif'
-mask_path = base_folder + '/masks/' + 'DAPI_c' + '.tif'
-output_folder = '/Users/alizeekastler/Documents/GitHub/Datasets/imaging/lines/' + 'coronal/' + line_name
+stack_path = base_folder + '/'+ line_name + '/ARX_s.tif'
+mask_path = base_folder + '/masks/' + 'DAPI_s' + '.tif'
+output_folder = '/Users/alizeekastler/Documents/GitHub/Datasets/imaging/lines/' + 'sagittal/' + line_name
 
 # Create output folder (if it does not exist)
 if not os.path.exists(output_folder):
