@@ -104,12 +104,24 @@ line_name = 'VGLUT'
 baseline = 1
 scale = 3
 
+line_name = 'HTR1AB'
+baseline = 1.5
+scale = 5
+
+line_name = 'NTS'
+baseline = 1.5
+scale = 2.5
+
+line_name = 'POMCA'
+baseline = 0.2
+scale = 12
+
 
 # Build paths
 base_folder = '/Volumes/T7/Peptides'
-stack_path = base_folder + '/'+ line_name + '/VGLUT_h.tif'
-mask_path = base_folder + '/masks/' + 'DAPI_h' + '.tif'
-output_folder = '/Users/alizeekastler/Documents/GitHub/Datasets/imaging/lines/' + 'horizontal/' + line_name
+stack_path = base_folder + '/'+ line_name + '/POMCA_s.tif'
+mask_path = base_folder + '/masks/' + 'DAPI_s' + '.tif'
+output_folder = '/Users/alizeekastler/Documents/GitHub/Datasets/imaging/lines/' + 'sagittal/' + line_name
 
 # Create output folder (if it does not exist)
 if not os.path.exists(output_folder):
