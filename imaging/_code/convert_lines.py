@@ -116,19 +116,16 @@ scale = 12000
 # baseline = 0.2
 # scale = 12
 
-# line_name = 'PTH2'
-# baseline = 1.6
-# scale = 3.6
+line_name = 'PTH2'
+baseline = 1.6
+scale = 3.6
 
-line_name = 'DAPI'
-baseline = -20000
-scale = 20000
 
 # Build paths
 base_folder = '/Volumes/T7/Peptides'
-stack_path = base_folder + '/'+ line_name + '/PTH2_s.tif'
-mask_path = base_folder + '/masks/' + 'DAPI_h' + '.tif'
-output_folder = '/Users/alizeekastler/Documents/GitHub/Datasets/imaging/lines/' + 'horizontal/' + line_name
+stack_path = base_folder + '/'+ line_name + '/PTH2_c.tif'
+mask_path = base_folder + '/masks/' + 'DAPI_c' + '.tif'
+output_folder = '/Users/alizeekastler/Documents/GitHub/Datasets/imaging/lines/' + 'coronal/' + line_name
 
 # Create output folder (if it does not exist)
 if not os.path.exists(output_folder):
